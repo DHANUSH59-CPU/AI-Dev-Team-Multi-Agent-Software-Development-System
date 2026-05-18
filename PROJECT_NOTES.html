@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Dev Team - Complete Project Notes</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    line-height: 1.7;
+    color: #1a202c;
+    background: #f7fafc;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  header {
+    background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 100%);
+    color: white;
+    padding: 40px 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  }
+  header h1 { font-size: 2.5em; margin-bottom: 10px; }
+  header p { font-size: 1.1em; opacity: 0.95; }
+  nav {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 10px;
+    z-index: 100;
+  }
+  nav h3 { color: #4a5568; margin-bottom: 12px; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; }
+  nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+  nav a {
+    display: inline-block;
+    padding: 6px 14px;
+    background: #edf2f7;
+    color: #2d3748;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.85em;
+    transition: all 0.2s;
+  }
+  nav a:hover { background: #4c51bf; color: white; }
+  section {
+    background: white;
+    padding: 30px;
+    margin-bottom: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  h2 {
+    color: #2c5282;
+    border-bottom: 3px solid #4299e1;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+  }
+  h3 {
+    color: #2d3748;
+    margin: 20px 0 12px 0;
+    font-size: 1.3em;
+  }
+  h4 { color: #4a5568; margin: 15px 0 8px 0; }
+  p { margin-bottom: 12px; }
+  ul, ol { margin: 10px 0 15px 30px; }
+  li { margin-bottom: 6px; }
+  code {
+    background: #2d3748;
+    color: #68d391;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'Consolas', monospace;
+    font-size: 0.9em;
+  }
+  pre {
+    background: #1a202c;
+    color: #e2e8f0;
+    padding: 18px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 15px 0;
+    font-family: 'Consolas', monospace;
+    font-size: 0.85em;
+    line-height: 1.5;
+  }
+  pre code { background: transparent; color: inherit; padding: 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    font-size: 0.95em;
+  }
+  th {
+    background: #4c51bf;
+    color: white;
+    padding: 12px;
+    text-align: left;
+  }
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  tr:nth-child(even) { background: #f7fafc; }
+  .highlight {
+    background: linear-gradient(120deg, #fef3c7 0%, #fde68a 100%);
+    padding: 15px 20px;
+    border-left: 5px solid #f59e0b;
+    border-radius: 6px;
+    margin: 15px 0;
+  }
+  .tip {
+    background: linear-gradient(120deg, #d1fae5 0%, #a7f3d0 100%);
+    padding: 15px 20px;
+    border-left: 5px solid #10b981;
+    border-radius: 6px;
+    margin: 15px 0;
+  }
+  .warning {
+    background: linear-gradient(120deg, #fee2e2 0%, #fecaca 100%);
+    padding: 15px 20px;
+    border-left: 5px solid #ef4444;
+    border-radius: 6px;
+    margin: 15px 0;
+  }
+  .info {
+    background: linear-gradient(120deg, #dbeafe 0%, #bfdbfe 100%);
+    padding: 15px 20px;
+    border-left: 5px solid #3b82f6;
+    border-radius: 6px;
+    margin: 15px 0;
+  }
+  .agent-card {
+    background: #f7fafc;
+    border: 2px solid #cbd5e0;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 12px 0;
+    transition: all 0.2s;
+  }
+  .agent-card:hover {
+    border-color: #4c51bf;
+    box-shadow: 0 4px 15px rgba(76,81,191,0.15);
+    transform: translateY(-2px);
+  }
+  .agent-card h4 {
+    color: #4c51bf;
+    font-size: 1.15em;
+    margin-bottom: 8px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    background: #4c51bf;
+    color: white;
+    border-radius: 12px;
+    font-size: 0.75em;
+    margin-right: 8px;
+  }
+  .qa-block {
+    background: #f0f4f8;
+    padding: 18px;
+    border-radius: 8px;
+    margin: 12px 0;
+  }
+  .qa-block .question {
+    font-weight: bold;
+    color: #c53030;
+    margin-bottom: 8px;
+  }
+  .qa-block .answer {
+    color: #2d3748;
+    padding-left: 15px;
+    border-left: 3px solid #4299e1;
+  }
+  .mermaid {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    margin: 20px 0;
+    border: 1px solid #e2e8f0;
+  }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin: 15px 0;
+  }
+  @media (max-width: 768px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    header h1 { font-size: 1.8em; }
+  }
+  footer {
+    text-align: center;
+    padding: 30px;
+    color: #718096;
+    font-size: 0.9em;
+  }
+  .toc-icon { margin-right: 6px; }
+  @media print {
+    nav { display: none; }
+    section { box-shadow: none; page-break-inside: avoid; }
+    header { background: #2c5282 !important; -webkit-print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>AI Dev Team — Complete Project Notes</h1>
+  <p>Multi-Agent Autonomous Software Development System</p>
+  <p style="margin-top:10px; font-size:0.95em;">Built with LangGraph + Google Gemini | Node.js + React</p>
+</header>
+
+<nav>
+  <h3>Quick Navigation</h3>
+  <ul>
+    <li><a href="#overview">1. Overview</a></li>
+    <li><a href="#why">2. Why this Project</a></li>
+    <li><a href="#stack">3. Tech Stack</a></li>
+    <li><a href="#architecture">4. Architecture</a></li>
+    <li><a href="#agents">5. The 27 Agents</a></li>
+    <li><a href="#flow">6. End-to-End Flow</a></li>
+    <li><a href="#state">7. State Management</a></li>
+    <li><a href="#concepts">8. Key Concepts</a></li>
+    <li><a href="#code">9. Code Walkthrough</a></li>
+    <li><a href="#whiteboard">10. Whiteboard Diagram</a></li>
+    <li><a href="#interview">11. Interview Q&A</a></li>
+    <li><a href="#summary">12. Final Summary</a></li>
+  </ul>
+</nav>
+
+<!-- ============ SECTION 1: OVERVIEW ============ -->
+<section id="overview">
+  <h2>1. Project Overview</h2>
+
+  <div class="highlight">
+    <strong>The One-Liner:</strong> An autonomous multi-agent AI system that takes a plain English requirement
+    like "build a todo app" and automatically generates the entire software project — from specifications
+    to working code — using 27 specialized AI agents working together like a real software team.
+  </div>
+
+  <h3>What problem does it solve?</h3>
+  <p>
+    Software development has many manual steps: gathering requirements, designing architecture, planning tasks,
+    writing code, reviewing, testing, and debugging. This project <strong>automates the entire pipeline</strong>
+    using AI agents, where each agent is a specialist (like a real PM, Architect, Coder, Reviewer).
+  </p>
+
+  <h3>What can it do?</h3>
+  <ul>
+    <li>Accept a vague requirement and ask clarifying questions</li>
+    <li>Design complete system architecture (DB schema, API endpoints, frontend pages)</li>
+    <li>Plan tasks into ordered phases</li>
+    <li>Write actual code for the entire application</li>
+    <li>Review code quality and execute it for testing</li>
+    <li>Self-debug when tests fail</li>
+    <li>Escalate to humans when stuck</li>
+    <li>Track LLM token usage and costs in real-time</li>
+    <li>Show all of this on a live React dashboard</li>
+  </ul>
+
+  <div class="tip">
+    <strong>Real-world analogy:</strong> It's like having a virtual software team where you're the client.
+    You say "I need an e-commerce site" and the team (PM, designer, coder, tester) handles everything.
+  </div>
+</section>
+
+<!-- ============ SECTION 2: WHY ============ -->
+<section id="why">
+  <h2>2. Why this Project Matters</h2>
+
+  <h3>It demonstrates these advanced concepts:</h3>
+  <table>
+    <tr><th>Concept</th><th>Where it's used</th></tr>
+    <tr><td>Multi-Agent AI Systems</td><td>27 specialized LLM-powered agents</td></tr>
+    <tr><td>State Machine Orchestration</td><td>LangGraph state graph with conditional edges</td></tr>
+    <tr><td>Event-Driven Architecture</td><td>WebSocket streaming, real-time updates</td></tr>
+    <tr><td>Sandboxed Execution</td><td>Docker containers for safe code running</td></tr>
+    <tr><td>Persistence & Recovery</td><td>Redis checkpointing for crash recovery</td></tr>
+    <tr><td>Human-in-the-Loop</td><td>Pauses for user input when needed</td></tr>
+    <tr><td>Resource Management</td><td>Token budget tracking with hard limits</td></tr>
+    <tr><td>Self-Healing Systems</td><td>Retry / simplify / escalate logic</td></tr>
+  </table>
+
+  <div class="info">
+    <strong>Why interviewers love this project:</strong> It shows you don't just know basics — you understand
+    distributed systems, AI orchestration, fault tolerance, and real-time communication. All in one project.
+  </div>
+</section>
+
+<!-- ============ SECTION 3: TECH STACK ============ -->
+<section id="stack">
+  <h2>3. Technology Stack</h2>
+
+  <div class="grid-2">
+    <div class="agent-card">
+      <h4>Frontend</h4>
+      <ul>
+        <li><strong>React 18</strong> — UI library</li>
+        <li><strong>Vite</strong> — fast dev server</li>
+        <li><strong>Zustand</strong> — state management</li>
+        <li><strong>WebSocket</strong> — real-time updates</li>
+        <li><strong>Custom CSS</strong> — industrial dark theme</li>
+      </ul>
+    </div>
+    <div class="agent-card">
+      <h4>Backend</h4>
+      <ul>
+        <li><strong>Node.js</strong> — runtime (ESM modules)</li>
+        <li><strong>Express</strong> — REST API server</li>
+        <li><strong>ws</strong> — WebSocket server</li>
+        <li><strong>CORS</strong> — cross-origin support</li>
+        <li><strong>dotenv</strong> — env config</li>
+      </ul>
+    </div>
+    <div class="agent-card">
+      <h4>AI Orchestration</h4>
+      <ul>
+        <li><strong>LangGraph</strong> — state graph framework</li>
+        <li><strong>Google Gemini</strong> — LLM (gemini-2.5-flash)</li>
+        <li><strong>@google/genai</strong> — Gemini SDK</li>
+        <li><strong>Token tracking</strong> — custom wrapper</li>
+      </ul>
+    </div>
+    <div class="agent-card">
+      <h4>Infrastructure</h4>
+      <ul>
+        <li><strong>Docker</strong> — sandbox containers</li>
+        <li><strong>Redis</strong> — state persistence</li>
+        <li><strong>LangGraph Redis Checkpoint</strong> — saver</li>
+        <li><strong>File System</strong> — registry tracking</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 4: ARCHITECTURE ============ -->
+<section id="architecture">
+  <h2>4. System Architecture</h2>
+
+  <h3>High-Level Architecture</h3>
+  <p>The system has 5 layers, each with a clear responsibility:</p>
+
+  <div class="mermaid">
+graph TB
+    U[User Browser] --> UI[React Dashboard :5173]
+    UI -->|REST| API[Express API :3000]
+    UI <-->|WebSocket| WS[WebSocket Server]
+    API --> GR[Graph Runner]
+    WS --> GR
+    GR --> LG[LangGraph - 27 Nodes]
+    LG <--> STATE[(Shared State)]
+    LG --> GEM[Gemini API]
+    LG --> DOCK[Docker Sandbox]
+    LG --> REDIS[(Redis)]
+    style U fill:#3b82f6,color:#fff
+    style LG fill:#ef4444,color:#fff
+    style GEM fill:#8b5cf6,color:#fff
+  </div>
+
+  <h3>Layer Breakdown</h3>
+  <table>
+    <tr><th>Layer</th><th>Components</th><th>Responsibility</th></tr>
+    <tr><td><strong>User</strong></td><td>Browser</td><td>Provides requirement, sees output</td></tr>
+    <tr><td><strong>Frontend</strong></td><td>React, Vite, Zustand</td><td>UI, real-time visualization</td></tr>
+    <tr><td><strong>Backend</strong></td><td>Express, WebSocket, GraphRunner</td><td>API gateway, streaming layer</td></tr>
+    <tr><td><strong>Core</strong></td><td>LangGraph, 27 Nodes, State</td><td>AI orchestration logic</td></tr>
+    <tr><td><strong>External</strong></td><td>Gemini, Redis, Docker</td><td>LLM brain, persistence, execution</td></tr>
+  </table>
+</section>
+
+<!-- ============ SECTION 5: AGENTS ============ -->
+<section id="agents">
+  <h2>5. The 27 Agents (Organized by Phase)</h2>
+
+  <p>The system has <strong>7 phases</strong>. Each phase has multiple nodes/agents.</p>
+
+  <h3><span class="badge">Phase 1</span> Requirements Gathering</h3>
+  <div class="agent-card">
+    <h4>PM Agent (pmAgent.js)</h4>
+    <p>Analyzes the user's raw requirement. If unclear, generates 3-8 clarifying questions.
+       Once answered, produces a structured JSON spec with features, pages, DB recommendation.</p>
+  </div>
+  <div class="agent-card">
+    <h4>Human Input Node (humanInput.js)</h4>
+    <p>Pauses the graph and collects answers from the user via terminal or dashboard.</p>
+  </div>
+
+  <h3><span class="badge">Phase 2</span> Architecture Design</h3>
+  <div class="agent-card">
+    <h4>Architect Agent — 5 Steps (architectAgent.js)</h4>
+    <ol>
+      <li><strong>Step 1:</strong> Identifies entities (User, Post, Comment...)</li>
+      <li><strong>Step 2:</strong> Designs database schema with tables and fields</li>
+      <li><strong>Step 3:</strong> Defines API endpoints (REST routes)</li>
+      <li><strong>Step 4:</strong> Plans frontend pages and routes</li>
+      <li><strong>Step 5:</strong> Generates the folder structure</li>
+    </ol>
+  </div>
+  <div class="agent-card">
+    <h4>Blueprint Validator (blueprintValidator.js)</h4>
+    <p>Checks the entire blueprint for consistency (e.g., does every API endpoint match an entity?).
+       Loops back to fix issues if invalid.</p>
+  </div>
+
+  <h3><span class="badge">Phase 3</span> Planning & Sandbox Setup</h3>
+  <div class="agent-card">
+    <h4>Planner Agent (plannerAgent.js)</h4>
+    <p>Breaks the blueprint into ordered phases of tasks (Setup → Backend → Frontend → Integration).
+       Each task lists the files to create.</p>
+  </div>
+  <div class="agent-card">
+    <h4>Setup Sandbox (setupSandbox.js)</h4>
+    <p>Creates a Docker container and isolated folder for the project.</p>
+  </div>
+  <div class="agent-card">
+    <h4>Sandbox Health Check (sandboxHealthCheck.js)</h4>
+    <p>Verifies the sandbox is ready and reachable before code starts being written.</p>
+  </div>
+
+  <h3><span class="badge">Phase 4</span> The Dev Loop (Most Important!)</h3>
+  <div class="agent-card">
+    <h4>Select Next Task (selectNextTask.js)</h4>
+    <p>Picks the next pending task from the queue. Routes to context builder, phase verification, or deployment.</p>
+  </div>
+  <div class="agent-card">
+    <h4>Context Builder (contextBuilder.js)</h4>
+    <p>Gathers all relevant info the coder needs: dependent files, patterns, the task description.</p>
+  </div>
+  <div class="agent-card">
+    <h4>Coder Agent (coderAgent.js)</h4>
+    <p>The actual code writer. Receives context, produces file contents, writes them to the sandbox.</p>
+  </div>
+  <div class="agent-card">
+    <h4>Update Registry (updateRegistry.js)</h4>
+    <p>Tracks every file created with its exports, functions, and metadata.</p>
+  </div>
+  <div class="agent-card">
+    <h4>Reviewer Agent (reviewerAgent.js)</h4>
+    <p>Reviews the generated code for bugs, style issues, missing logic. Outputs: approved, rejected, or needs simplification.</p>
+  </div>
+  <div class="agent-card">
+    <h4>Executor Agent (executorAgent.js)</h4>
+    <p>Actually runs the code inside Docker to check if it works.</p>
+  </div>
+  <div class="agent-card">
+    <h4>Debugger Agent (debuggerAgent.js)</h4>
+    <p>If execution fails, analyzes errors. 3-tier strategy: simple fix, deeper investigation, escalate.</p>
+  </div>
+  <div class="agent-card">
+    <h4>Snapshot Manager (snapshotManager.js)</h4>
+    <p>Saves a checkpoint of working code after every successful task — enables rollback.</p>
+  </div>
+  <div class="agent-card">
+    <h4>Simplify Task (simplifyTask.js)</h4>
+    <p>If a task keeps failing, breaks it into a simpler version.</p>
+  </div>
+  <div class="agent-card">
+    <h4>Human Escalation (humanEscalation.js)</h4>
+    <p>When the system can't proceed, asks the human: skip / provide guidance / simplify.</p>
+  </div>
+
+  <h3><span class="badge">Phase 5</span> Quality & Optimization</h3>
+  <div class="agent-card">
+    <h4>Phase Verification (phaseVerification.js)</h4>
+    <p>Verifies all tasks in the current phase actually work together.</p>
+  </div>
+  <div class="agent-card">
+    <h4>Pattern Extractor (patternExtractor.js)</h4>
+    <p>Looks at completed code and extracts patterns (naming, error handling) for consistency in future tasks.</p>
+  </div>
+  <div class="agent-card">
+    <h4>State Compactor (stateCompactor.js)</h4>
+    <p>Trims unnecessary data from state to save memory and tokens between phases.</p>
+  </div>
+
+  <h3><span class="badge">Phase 6</span> Deployment</h3>
+  <div class="agent-card">
+    <h4>Deployment Verifier (deploymentVerifier.js)</h4>
+    <p>Final smoke test — does the complete app actually start and respond?</p>
+  </div>
+  <div class="agent-card">
+    <h4>Present to User (presentToUser.js)</h4>
+    <p>Formats the final output: where files are, how to run, what was built.</p>
+  </div>
+
+  <h3><span class="badge">Phase 7</span> Dashboard (Frontend)</h3>
+  <p>Not nodes, but UI components:</p>
+  <ul>
+    <li><strong>PipelineVisualizer</strong> — shows which agent is running</li>
+    <li><strong>LogStream</strong> — live agent output</li>
+    <li><strong>OutputPanel</strong> — shows generated files</li>
+    <li><strong>HumanInputPanel</strong> — for clarifying questions</li>
+    <li><strong>TokenBudgetBar</strong> — tracks LLM costs</li>
+  </ul>
+</section>
+
+<!-- ============ SECTION 6: FLOW ============ -->
+<section id="flow">
+  <h2>6. End-to-End Flow</h2>
+
+  <h3>The Complete Journey</h3>
+  <div class="mermaid">
+flowchart TD
+    A[User types: Build a todo app] --> B[PM Agent]
+    B -->|needs clarification| C[Ask user questions]
+    C --> B
+    B -->|spec ready| D[Architect Agent - 5 steps]
+    D --> E[Blueprint Validator]
+    E -->|invalid| D
+    E -->|valid| F[Planner Agent]
+    F --> G[Setup Docker Sandbox]
+    G --> H[Health Check]
+    H --> I[Dev Loop]
+    I -->|each task| J[Coder writes code]
+    J --> K[Reviewer checks]
+    K -->|approved| L[Executor runs]
+    K -->|rejected| J
+    L -->|pass| M[Save snapshot]
+    L -->|fail| N[Debugger]
+    N -->|fixed| J
+    N -->|stuck| O[Human helps]
+    M --> I
+    I -->|all done| P[Deployment Check]
+    P --> Q[Present to User - DONE!]
+    style A fill:#3b82f6,color:#fff
+    style Q fill:#10b981,color:#fff
+  </div>
+
+  <h3>Step-by-Step Example</h3>
+  <ol>
+    <li><strong>User says:</strong> "Build a todo app with categories"</li>
+    <li><strong>PM Agent asks:</strong> "Should users have accounts? What about due dates?"</li>
+    <li><strong>User answers</strong></li>
+    <li><strong>PM Agent outputs JSON spec</strong> with features and pages</li>
+    <li><strong>Architect designs:</strong> User table, Todo table, Category table, 8 API endpoints, 5 frontend pages</li>
+    <li><strong>Planner creates</strong> 4 phases with 25 tasks total</li>
+    <li><strong>Docker sandbox starts</strong></li>
+    <li><strong>Dev Loop begins:</strong> Coder writes <code>models/User.js</code>, Reviewer approves, Executor runs tests, snapshot saved</li>
+    <li><strong>Loop continues</strong> for all 25 tasks</li>
+    <li><strong>Final verification</strong> — app runs successfully</li>
+    <li><strong>User sees:</strong> "Done! Your todo app is in /sandbox/project-12345"</li>
+  </ol>
+</section>
+
+<!-- ============ SECTION 7: STATE ============ -->
+<section id="state">
+  <h2>7. State Management (LangGraph)</h2>
+
+  <div class="info">
+    <strong>Key Insight:</strong> All 27 agents communicate ONLY through a shared state object.
+    No direct function calls between agents. This makes the system loosely coupled and easy to debug.
+  </div>
+
+  <h3>How State Works</h3>
+  <p>Each field in state has a <strong>reducer</strong> — a merge function:</p>
+  <ul>
+    <li><strong>Simple fields</strong> (string, number): last write wins</li>
+    <li><strong>Arrays</strong> (file registry, conversation): accumulate (push new items)</li>
+    <li><strong>Objects</strong> (blueprint, patterns): merge keys (spread)</li>
+    <li><strong>Token usage:</strong> sum totals + append new calls</li>
+  </ul>
+
+  <h3>Key State Fields</h3>
+  <table>
+    <tr><th>Field</th><th>Type</th><th>Set by</th><th>Read by</th></tr>
+    <tr><td><code>userRequirement</code></td><td>string</td><td>Entry point</td><td>PM Agent</td></tr>
+    <tr><td><code>clarifiedSpec</code></td><td>object</td><td>PM Agent</td><td>Architect</td></tr>
+    <tr><td><code>blueprint</code></td><td>object</td><td>Architect (5 steps)</td><td>Planner</td></tr>
+    <tr><td><code>taskQueue</code></td><td>array</td><td>Planner</td><td>Select Next Task</td></tr>
+    <tr><td><code>fileRegistry</code></td><td>array</td><td>Update Registry</td><td>Context Builder</td></tr>
+    <tr><td><code>currentTask</code></td><td>object</td><td>Select Next Task</td><td>Coder, Reviewer</td></tr>
+    <tr><td><code>coderOutput</code></td><td>object</td><td>Coder Agent</td><td>Reviewer, Executor</td></tr>
+    <tr><td><code>reviewResult</code></td><td>object</td><td>Reviewer</td><td>Router (next node)</td></tr>
+    <tr><td><code>executionResult</code></td><td>object</td><td>Executor</td><td>Debugger</td></tr>
+    <tr><td><code>tokenUsage</code></td><td>object</td><td>Every LLM call</td><td>Budget check</td></tr>
+  </table>
+
+  <h3>Sample Reducer Code</h3>
+  <pre><code>// From state.js — how fileRegistry accumulates
+fileRegistry: Annotation({
+  reducer: (existing, incoming) => {
+    if (!incoming) return existing;
+    if (Array.isArray(incoming)) {
+      const map = new Map(existing.map(f => [f.path, f]));
+      for (const entry of incoming) {
+        map.set(entry.path, entry);  // update or add
+      }
+      return Array.from(map.values());
+    }
+    return existing;
+  },
+  default: () => [],
+}),</code></pre>
+</section>
+
+<!-- ============ SECTION 8: CONCEPTS ============ -->
+<section id="concepts">
+  <h2>8. Key Concepts Explained</h2>
+
+  <h3>What is LangGraph?</h3>
+  <p>
+    LangGraph is a framework for building <strong>stateful, multi-actor applications</strong> with LLMs.
+    Think of it like a state machine where each "state" is a node, and edges define transitions.
+    Instead of writing tangled if-else chains, you describe nodes and edges, and LangGraph handles the flow.
+  </p>
+
+  <h3>What is a Multi-Agent System?</h3>
+  <p>
+    Instead of one giant AI prompt doing everything, you split work among <strong>specialized agents</strong>.
+    Each agent has a focused role (PM, Coder, Reviewer). They communicate through shared state.
+    Benefits: Better quality, easier debugging, parallelization possible.
+  </p>
+
+  <h3>What is Checkpointing?</h3>
+  <p>
+    After every node finishes, the entire state is saved to Redis. If the process crashes,
+    you can resume from the last good state instead of starting over. This is critical because
+    a full run might take 30+ minutes and cost real money in LLM tokens.
+  </p>
+
+  <h3>What is Sandboxing?</h3>
+  <p>
+    Generated code is <strong>untrusted</strong> — it could have bugs or be malicious.
+    Running it on your host machine is dangerous. Docker creates an isolated container
+    where the code runs without access to your real filesystem.
+  </p>
+
+  <h3>What is Token Budgeting?</h3>
+  <p>
+    LLM API calls cost money based on tokens (chunks of text). A runaway loop could rack up
+    huge bills. The system tracks every input/output token, calculates cost, and hard-stops
+    if the budget (e.g., $2.00) is exceeded.
+  </p>
+
+  <h3>What is Human-in-the-Loop?</h3>
+  <p>
+    Some decisions are too important for AI alone (e.g., "this task keeps failing — should I skip it?").
+    The system pauses, asks the human, then resumes with their input.
+  </p>
+
+  <h3>Self-Healing Loop</h3>
+  <p>
+    The dev loop doesn't crash on first failure. It retries, simplifies, debugs, and only escalates
+    when all else fails. This makes the system <strong>resilient</strong>.
+  </p>
+  <pre><code>Code rejected by reviewer?
+  -> Retry up to 2 times
+  -> If still failing, simplify the task
+  -> If simplification fails, escalate to human
+
+Code fails execution?
+  -> Debugger tries to fix
+  -> If can't fix, escalate to human</code></pre>
+</section>
+
+<!-- ============ SECTION 9: CODE WALKTHROUGH ============ -->
+<section id="code">
+  <h2>9. Code Walkthrough (Key Files)</h2>
+
+  <h3>Project Structure</h3>
+  <pre><code>AIDevFinal/
+├── src/
+│   ├── index.js              # CLI entry point
+│   ├── agents/               # 8 LLM-powered agents
+│   │   ├── pmAgent.js
+│   │   ├── architectAgent.js
+│   │   ├── blueprintValidator.js
+│   │   ├── plannerAgent.js
+│   │   ├── coderAgent.js
+│   │   ├── reviewerAgent.js
+│   │   ├── executorAgent.js
+│   │   └── debuggerAgent.js
+│   ├── nodes/                # Non-LLM helper nodes
+│   │   ├── humanInput.js
+│   │   ├── setupSandbox.js
+│   │   ├── contextBuilder.js
+│   │   ├── snapshotManager.js
+│   │   └── ... (15 more)
+│   ├── config/
+│   │   ├── state.js          # Shared state definition
+│   │   └── graph.js          # LangGraph wiring
+│   └── utils/
+│       ├── gemini.js          # LLM API wrapper
+│       ├── sandboxManager.js  # Docker management
+│       ├── redisDocker.js     # Redis container helper
+│       └── tokenTracker.js    # Cost tracking
+├── server/                   # Express + WebSocket
+│   ├── index.js
+│   ├── routes/projects.js
+│   ├── services/graphRunner.js
+│   └── ws/handler.js
+├── dashboard/                # React frontend
+│   ├── src/
+│   │   ├── App.jsx
+│   │   ├── components/
+│   │   ├── hooks/useWebSocket.js
+│   │   └── store/projectStore.js
+│   └── vite.config.js
+├── tests/                    # Mock + real API tests
+└── package.json</code></pre>
+
+  <h3>Sample: How a Node is Defined</h3>
+  <pre><code>// Every node is just a function: state -> partial state update
+async function pmAgentNode(state) {
+  const response = await callGemini({
+    prompt: `User wants: ${state.userRequirement}. Generate spec or questions.`
+  });
+
+  if (response.needsClarification) {
+    return {
+      pmStatus: "needs_clarification",
+      pmQuestions: response.questions,
+    };
+  }
+
+  return {
+    pmStatus: "spec_ready",
+    clarifiedSpec: response.spec,
+  };
+}</code></pre>
+
+  <h3>Sample: How Edges Route</h3>
+  <pre><code>// Conditional edge — decides where to go based on state
+graph.addConditionalEdges("pmAgent", (state) => {
+  if (state.pmStatus === "needs_clarification") return "humanInput";
+  if (state.pmStatus === "spec_ready") return "architectStep1";
+  return END;
+});</code></pre>
+
+  <h3>How to Run</h3>
+  <pre><code># 1. Install
+npm install
+cd dashboard && npm install && cd ..
+
+# 2. Add API key to .env
+GEMINI_API_KEY=your_key_here
+
+# 3. Run (starts both backend and dashboard)
+npm run dev
+
+# Open http://localhost:5173</code></pre>
+</section>
+
+<!-- ============ SECTION 10: WHITEBOARD ============ -->
+<section id="whiteboard">
+  <h2>10. Whiteboard Diagram (for Interviews)</h2>
+
+  <div class="warning">
+    <strong>Important:</strong> In interviews, don't draw all 27 nodes. Draw this simple version in under 2 minutes.
+  </div>
+
+  <h3>The 5-Box Diagram</h3>
+  <pre><code>┌──────────────┐
+│    USER      │   "Build a todo app"
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐
+│  DASHBOARD   │   React + WebSocket
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐
+│   BACKEND    │   Node.js + Express
+└──────┬───────┘
+       │
+       ▼
+┌─────────────────────────────────────┐
+│      LANGGRAPH ORCHESTRATOR         │
+│                                     │
+│   PM → Architect → Planner → Coder  │
+│                       ↑       │     │
+│                       │       ▼     │
+│                    Debugger  Review │
+└──────┬──────────────────────────────┘
+       │
+       ▼
+┌──────────────┐      ┌──────────────┐
+│   GEMINI     │      │   DOCKER     │
+│   (LLM)      │      │  (Sandbox)   │
+└──────────────┘      └──────────────┘</code></pre>
+
+  <h3>Drawing Script (what to say while drawing)</h3>
+  <ol>
+    <li>"User gives requirement" <em>(draw top box)</em></li>
+    <li>"Dashboard receives it, built with React" <em>(draw arrow + box)</em></li>
+    <li>"Backend in Node.js routes to LangGraph" <em>(draw arrow + box)</em></li>
+    <li>"LangGraph orchestrates AI agents — PM, Architect, Planner, Coder" <em>(draw big box)</em></li>
+    <li>"Coder works in a loop with Reviewer and Debugger" <em>(add loop arrow)</em></li>
+    <li>"Each agent uses Gemini for thinking, and code runs in Docker for safety" <em>(draw bottom boxes)</em></li>
+  </ol>
+</section>
+
+<!-- ============ SECTION 11: INTERVIEW Q&A ============ -->
+<section id="interview">
+  <h2>11. Interview Questions & Answers</h2>
+
+  <div class="qa-block">
+    <div class="question">Q1: Explain your project in 30 seconds.</div>
+    <div class="answer">
+      "I built a multi-agent AI system that takes a plain English requirement and automatically generates an entire software project. It uses 27 specialized AI agents — PM, Architect, Planner, Coder, Reviewer, Debugger — orchestrated by LangGraph. Each agent has a specific role, like a real software team. The system also has a React dashboard for real-time monitoring."
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="question">Q2: Why did you use multiple agents instead of one big AI prompt?</div>
+    <div class="answer">
+      "A single prompt can't handle the full software lifecycle. Context would explode, hit token limits, and quality would drop. By splitting into specialized agents, each prompt is small, focused, and produces better results. It also lets me debug each step independently."
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="question">Q3: What was the hardest technical challenge?</div>
+    <div class="answer">
+      "Coordinating 27 agents without spaghetti code. I solved it using LangGraph's shared-state pattern — nodes don't call each other directly, they read and write to a central state with reducer functions that handle merging. This made the system loosely coupled and easy to extend."
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="question">Q4: How do you handle failures?</div>
+    <div class="answer">
+      "Three layers: First, retry — if a coder's output gets rejected by the reviewer, it retries up to 2 times. Second, simplification — if retries fail, the task is broken into a smaller version. Third, human escalation — if even that fails, the system pauses and asks the human. Plus, state is checkpointed to Redis so a crash doesn't lose progress."
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="question">Q5: How do agents communicate?</div>
+    <div class="answer">
+      "Through shared state in LangGraph. Each node receives the state, returns updates, and LangGraph applies reducers to merge those updates. For example, the Coder writes to <code>coderOutput</code>, then the Reviewer reads it from state. There are no direct function calls between agents."
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="question">Q6: Why Docker for code execution?</div>
+    <div class="answer">
+      "Generated code is untrusted — it could have bugs or be unintentionally harmful. Running it on the host machine is dangerous. Docker isolates each project in its own container, so even if the code breaks, it doesn't affect my system."
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="question">Q7: What's the role of Redis?</div>
+    <div class="answer">
+      "Redis is the checkpointer. After every agent finishes, the entire state snapshot is saved to Redis. If the pipeline crashes, I can resume from the last checkpoint using a thread ID. Without this, a 30-minute run could lose all progress."
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="question">Q8: How do you keep LLM costs under control?</div>
+    <div class="answer">
+      "Every Gemini call goes through a wrapper that counts input/output tokens and calculates cost. The system has a configurable token budget — when exceeded, it throws an error and stops. There's also a state compactor that trims unnecessary data between phases to keep context size small."
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="question">Q9: Why WebSocket for the dashboard?</div>
+    <div class="answer">
+      "The pipeline can run for many minutes. With REST polling, the dashboard would either miss events or hammer the server. WebSocket lets the backend push updates as each agent runs — pipeline state, log lines, token usage — without the client having to ask."
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="question">Q10: What would you improve?</div>
+    <div class="answer">
+      "Three things: First, parallelize independent tasks — right now everything is sequential. Second, support multiple LLM providers, not just Gemini. Third, add a CI/CD pipeline so generated projects can deploy automatically to AWS or Vercel."
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="question">Q11: What design patterns did you use?</div>
+    <div class="answer">
+      "Several: State Machine (LangGraph), Strategy Pattern (different debugger tiers), Observer Pattern (WebSocket events), Reducer Pattern (state merging), and Circuit Breaker (token budget enforcement)."
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="question">Q12: How does the React frontend work?</div>
+    <div class="answer">
+      "It's a Vite + React app with Zustand for state. When the user submits a requirement, it hits the backend via REST. Then a WebSocket connection streams real-time updates — which agent is running, log lines, token usage. There's also a Human Input Panel that appears when the backend pauses for user input."
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 12: SUMMARY ============ -->
+<section id="summary">
+  <h2>12. Final Summary & Cheat Sheet</h2>
+
+  <div class="highlight">
+    <h3 style="margin-top:0">Remember these 5 sentences</h3>
+    <ol>
+      <li><strong>"It's a multi-agent AI system that auto-generates software from a plain English requirement."</strong></li>
+      <li><strong>"It uses LangGraph to orchestrate 27 specialized AI agents — PM, Architect, Planner, Coder, Reviewer, Debugger."</strong></li>
+      <li><strong>"Agents communicate through shared state, not direct calls."</strong></li>
+      <li><strong>"Code runs in Docker sandboxes, state is checkpointed in Redis."</strong></li>
+      <li><strong>"A React dashboard monitors everything in real-time via WebSocket."</strong></li>
+    </ol>
+  </div>
+
+  <h3>The 5 Layers (memorize this)</h3>
+  <p>User → Dashboard → Backend → LangGraph → External (Gemini, Docker, Redis)</p>
+
+  <h3>The 4 Main Agents to Name</h3>
+  <ol>
+    <li><strong>PM Agent</strong> — turns idea into spec</li>
+    <li><strong>Architect Agent</strong> — designs blueprint</li>
+    <li><strong>Planner Agent</strong> — creates task list</li>
+    <li><strong>Coder Agent</strong> — writes code (with Reviewer + Debugger helping)</li>
+  </ol>
+
+  <h3>Keywords to Drop in Interview</h3>
+  <p>LangGraph, multi-agent system, state machine, checkpointing, Docker sandbox, WebSocket streaming, token budgeting, self-healing loop, human-in-the-loop, Gemini API, conditional edges, reducer pattern.</p>
+
+  <div class="tip">
+    <strong>Final Tip:</strong> Don't memorize answers word-for-word. Understand the <em>concepts</em>.
+    If you understand WHY each piece exists, you can explain it in your own words even if the
+    interviewer asks unexpected angles.
+  </div>
+
+  <h3>What to Do Before Interview</h3>
+  <ol>
+    <li>Read this document end-to-end at least 2 times</li>
+    <li>Practice the whiteboard diagram on paper 5 times</li>
+    <li>Say the one-liner out loud until it's natural</li>
+    <li>Review the 12 Q&A pairs</li>
+    <li>Open your GitHub repo on your phone — be ready to show</li>
+  </ol>
+</section>
+
+<footer>
+  <p>AI Dev Team Project Notes — Built for Interview Preparation</p>
+  <p>Tip: Use Ctrl+P to save this as a PDF for offline reading</p>
+</footer>
+
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+  document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+
+</body>
+</html>
