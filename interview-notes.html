@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TCS Prime Interview Notes — AI Dev Team Project</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --card: #1a1d27;
+      --border: #2a2d3e;
+      --accent: #7c3aed;
+      --accent2: #06b6d4;
+      --accent3: #10b981;
+      --accent4: #f59e0b;
+      --red: #ef4444;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --code-bg: #0d1117;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.7;
+      padding: 0 0 60px;
+    }
+
+    /* HEADER */
+    .hero {
+      background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 50%, #0c4a6e 100%);
+      padding: 50px 40px 40px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #a78bfa, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+    .hero p { color: var(--muted); font-size: 1rem; }
+    .badge {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin: 4px;
+      font-weight: 600;
+    }
+    .badge.cyan  { background: #0e7490; }
+    .badge.green { background: #065f46; }
+    .badge.amber { background: #92400e; }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #13151f;
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    nav a {
+      display: inline-block;
+      padding: 12px 14px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    nav a:hover { color: var(--text); border-bottom-color: var(--accent); }
+
+    /* LAYOUT */
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 48px 0 24px; }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #a78bfa;
+      margin-bottom: 24px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h3 { font-size: 1.05rem; font-weight: 600; color: #38bdf8; margin: 20px 0 10px; }
+
+    /* CARDS */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .stat-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+    .stat-box .num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #a78bfa;
+      display: block;
+    }
+    .stat-box .label { font-size: 0.75rem; color: var(--muted); }
+
+    /* CODE BLOCKS */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      overflow-x: auto;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      color: #e2e8f0;
+      margin: 12px 0;
+    }
+    code {
+      background: #1e2235;
+      color: #a78bfa;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Cascadia Code', monospace;
+      font-size: 0.85em;
+    }
+
+    /* TABLES */
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.88rem; }
+    th {
+      background: #1e2235;
+      color: #a78bfa;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 9px 14px;
+      border-bottom: 1px solid #1e2235;
+      color: var(--text);
+    }
+    tr:hover td { background: #1a1d2b; }
+
+    /* QA */
+    .qa-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .qa-q {
+      background: #1e1b4b;
+      padding: 14px 18px;
+      font-weight: 600;
+      color: #c4b5fd;
+      font-size: 0.92rem;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .qa-q::after { content: '▼'; font-size: 0.7rem; color: var(--muted); }
+    .qa-a {
+      padding: 14px 18px;
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      line-height: 1.75;
+    }
+
+    /* PHASE TIMELINE */
+    .phases {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      padding-left: 28px;
+    }
+    .phases::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, #7c3aed, #06b6d4, #10b981);
+    }
+    .phase {
+      position: relative;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+    }
+    .phase::before {
+      content: '';
+      position: absolute;
+      left: -23px;
+      top: 20px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+    }
+    .phase-num {
+      font-size: 0.7rem;
+      color: var(--accent);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .phase-name { font-weight: 700; font-size: 1rem; color: var(--text); }
+    .phase-desc { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
+    .phase-tags { margin-top: 8px; }
+
+    /* ARCH DIAGRAM */
+    .arch-box {
+      border: 1px solid;
+      border-radius: 8px;
+      padding: 10px 16px;
+      text-align: center;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+    .arch-box.user    { border-color: #7c3aed; color: #a78bfa; background: #1e1b4b; }
+    .arch-box.ui      { border-color: #0e7490; color: #38bdf8; background: #0c1f2e; }
+    .arch-box.server  { border-color: #065f46; color: #34d399; background: #0a1f18; }
+    .arch-box.engine  { border-color: #92400e; color: #fbbf24; background: #1c140a; }
+    .arch-box.llm     { border-color: #7c3aed; color: #c4b5fd; background: #16101e; }
+    .arch-box.docker  { border-color: #0e7490; color: #67e8f9; background: #061520; }
+    .arch-box.redis   { border-color: #b91c1c; color: #f87171; background: #1a0a0a; }
+    .arch-arrow {
+      text-align: center;
+      color: var(--muted);
+      font-size: 1.2rem;
+      padding: 4px 0;
+    }
+    .arch-row { display: flex; gap: 16px; align-items: stretch; margin: 8px 0; }
+    .arch-row .arch-box { flex: 1; }
+
+    /* TOKEN BAR */
+    .token-bar-wrap { margin: 8px 0 4px; }
+    .token-bar-label { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--muted); margin-bottom: 4px; }
+    .token-bar { height: 8px; border-radius: 4px; background: #1e2235; overflow: hidden; }
+    .token-bar-fill { height: 100%; border-radius: 4px; }
+
+    /* TIPS */
+    .tip {
+      background: #0a1f18;
+      border-left: 3px solid #10b981;
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.88rem;
+      color: #a7f3d0;
+      margin: 12px 0;
+    }
+    .warn {
+      background: #1c140a;
+      border-left: 3px solid #f59e0b;
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.88rem;
+      color: #fde68a;
+      margin: 12px 0;
+    }
+
+    ul { padding-left: 20px; }
+    ul li { margin-bottom: 6px; font-size: 0.9rem; color: #cbd5e1; }
+    p { color: #cbd5e1; font-size: 0.92rem; margin-bottom: 10px; }
+    .highlight { color: #fbbf24; font-weight: 600; }
+    .section-intro { color: var(--muted); font-size: 0.9rem; margin-bottom: 24px; margin-top: -16px; }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.5rem; }
+      .stat-grid { grid-template-columns: repeat(2,1fr); }
+      .arch-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <p style="color:#a78bfa;font-size:0.8rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">TCS Prime Interview Prep</p>
+  <h1>AI Dev Team — Multi-Agent System</h1>
+  <p style="margin-bottom:16px;">Complete study notes for your technical interview</p>
+  <div>
+    <span class="badge">Python</span>
+    <span class="badge">LangGraph</span>
+    <span class="badge cyan">FastAPI</span>
+    <span class="badge cyan">Google Gemini API</span>
+    <span class="badge green">Docker</span>
+    <span class="badge green">Redis</span>
+    <span class="badge amber">27 AI Agents</span>
+    <span class="badge amber">Multi-Agent System</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#overview">Overview</a>
+  <a href="#architecture">Architecture</a>
+  <a href="#phases">7 Phases</a>
+  <a href="#devloop">Dev Loop</a>
+  <a href="#tokens">Token Cost</a>
+  <a href="#qa-tech">Tech Q&A</a>
+  <a href="#qa-python">Python Q&A</a>
+  <a href="#qa-dsa">DSA Q&A</a>
+  <a href="#qa-ai">AI/ML Q&A</a>
+  <a href="#tips">Interview Tips</a>
+</nav>
+
+<div class="container">
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <h2>🚀 Project Overview</h2>
+  <p class="section-intro">What to say in the first 30 seconds when asked "Tell me about your project"</p>
+
+  <div class="card" style="border-color:#7c3aed;">
+    <h3 style="color:#a78bfa;margin-top:0;">One-Line Pitch</h3>
+    <p style="font-size:1rem;color:#e2e8f0;font-weight:500;">"I built an autonomous multi-agent AI system in Python that takes a plain-English requirement and generates a fully deployed application — backend, database, and frontend — without human intervention, using <span class="highlight">27 specialized AI agents</span> orchestrated by LangGraph."</p>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-box"><span class="num">27</span><span class="label">AI Agents / Nodes</span></div>
+    <div class="stat-box"><span class="num" style="color:#38bdf8">7</span><span class="label">Pipeline Phases</span></div>
+    <div class="stat-box"><span class="num" style="color:#34d399">~65</span><span class="label">LLM Calls / App</span></div>
+    <div class="stat-box"><span class="num" style="color:#fbbf24">$0.13</span><span class="label">Cost (Todo App)</span></div>
+    <div class="stat-box"><span class="num" style="color:#f87171">$2.00</span><span class="label">Default Budget</span></div>
+    <div class="stat-box"><span class="num" style="color:#a78bfa">12</span><span class="label">LLM Agents</span></div>
+    <div class="stat-box"><span class="num" style="color:#38bdf8">15</span><span class="label">Code-Only Agents</span></div>
+    <div class="stat-box"><span class="num" style="color:#34d399">21</span><span class="label">Tasks (Todo App)</span></div>
+  </div>
+
+  <h3>Tech Stack (Python — as on Resume)</h3>
+  <table>
+    <tr><th>Component</th><th>Technology</th><th>Purpose</th></tr>
+    <tr><td>Orchestration</td><td><code>LangGraph (Python)</code></td><td>27-node stateful pipeline</td></tr>
+    <tr><td>LLM</td><td><code>Google Gemini 2.5 Flash</code></td><td>AI reasoning & code generation</td></tr>
+    <tr><td>Backend Server</td><td><code>FastAPI + WebSockets</code></td><td>REST API & real-time streaming</td></tr>
+    <tr><td>State Persistence</td><td><code>Redis (redis-py)</code></td><td>Checkpoint after every node</td></tr>
+    <tr><td>Code Execution</td><td><code>Docker SDK (docker-py)</code></td><td>Isolated sandbox for generated code</td></tr>
+    <tr><td>Async</td><td><code>asyncio</code></td><td>Non-blocking event loop</td></tr>
+    <tr><td>Config</td><td><code>python-dotenv</code></td><td>Environment variables</td></tr>
+    <tr><td>Dashboard</td><td><code>React + Zustand</code></td><td>Real-time monitoring UI</td></tr>
+  </table>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture">
+  <h2>🏗️ System Architecture</h2>
+  <p class="section-intro">Draw this when asked "explain the architecture" — takes ~2 minutes</p>
+
+  <div class="card">
+    <div class="arch-box user">👤 USER — types "Build a Todo App with categories"</div>
+    <div class="arch-arrow">│ HTTP / WebSocket</div>
+    <div class="arch-box ui">⚛️ REACT DASHBOARD — Real-time pipeline view | Token cost bar | Human Q&A panel</div>
+    <div class="arch-arrow">│ WebSocket (push events)</div>
+    <div class="arch-box server">⚡ FastAPI BACKEND — REST /api/projects | WebSocket /ws | Graph Runner Service</div>
+    <div class="arch-arrow">│ orchestrates</div>
+    <div class="arch-box engine" style="padding:16px;">
+      🧠 LANGGRAPH ENGINE — 27 Agents / Nodes<br/>
+      <span style="font-size:0.78rem;color:#fde68a;">PM → ARCHITECT → PLANNER → DEV LOOP → QUALITY → DEPLOY → OUTPUT</span>
+    </div>
+    <div class="arch-arrow">│</div>
+    <div class="arch-row">
+      <div class="arch-box llm">🤖 GEMINI 2.5 API<br/><span style="font-size:0.75rem;color:#c4b5fd;">12 agents • ~65 calls<br/>$0.15/1M in | $0.60/1M out</span></div>
+      <div class="arch-box docker">🐳 DOCKER SANDBOX<br/><span style="font-size:0.75rem;color:#67e8f9;">PostgreSQL<br/>Node.js Backend<br/>React Frontend</span></div>
+      <div class="arch-box redis">⚡ REDIS<br/><span style="font-size:0.75rem;color:#fca5a5;">Checkpoint after<br/>every node<br/>crash-safe resume</span></div>
+    </div>
+  </div>
+
+  <div class="tip">💡 <strong>Why Docker?</strong> Generated code is untrusted — running it on the host is a security risk. Docker gives OS-level isolation. Uses Python's <code>docker</code> SDK to spin up containers and run <code>docker exec</code> commands.</div>
+  <div class="tip">💡 <strong>Why Redis?</strong> A full run takes 30–60 minutes and makes 100+ API calls. Redis saves state after every node so if it crashes at node 20, it resumes from node 20 — not from the start.</div>
+</section>
+
+<!-- PHASES -->
+<section id="phases">
+  <h2>📋 The 7 Phases</h2>
+  <p class="section-intro">Memorize these — you WILL be asked "walk me through how it works"</p>
+
+  <div class="phases">
+    <div class="phase">
+      <div class="phase-num">Phase 1</div>
+      <div class="phase-name">PM Agent</div>
+      <div class="phase-desc">Converts vague requirement → structured specification. Asks 3–8 clarifying questions if ambiguous. Collects answers via terminal or dashboard WebSocket.</div>
+      <div class="phase-tags"><span class="badge">1 LLM node</span> <span class="badge cyan">Output: clarifiedSpec</span></div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">Phase 2</div>
+      <div class="phase-name">Architect Agent (5 Steps)</div>
+      <div class="phase-desc">Step 1: Entities & naming map | Step 2: DB schema | Step 3: API endpoints | Step 4: Frontend pages | Step 5: Folder structure. Followed by Blueprint Validator (pure Python, no LLM) that cross-checks all 5 outputs for consistency.</div>
+      <div class="phase-tags"><span class="badge">5 LLM calls</span> <span class="badge green">1 validator (no LLM)</span> <span class="badge cyan">Output: blueprint</span></div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">Phase 3</div>
+      <div class="phase-name">Planner + Sandbox Setup</div>
+      <div class="phase-desc">Planner breaks blueprint into 15–25 ordered tasks across 7 sub-phases. Setup creates 3 Docker containers (PostgreSQL, Node backend, React frontend) on the same network. Health check verifies all containers can communicate.</div>
+      <div class="phase-tags"><span class="badge">1 LLM call</span> <span class="badge green">2 code nodes</span> <span class="badge cyan">Output: taskQueue + sandboxId</span></div>
+    </div>
+    <div class="phase" style="border-color:#7c3aed;">
+      <div class="phase-num" style="color:#fbbf24">Phase 4 ⭐ CORE</div>
+      <div class="phase-name">Dev Loop — Self-Healing</div>
+      <div class="phase-desc">13 nodes. Cycles through every task: pick task → build context → generate code → review → execute in Docker → snapshot. Failed code goes to debugger (3-tier escalation). If rejected 3× → simplify task. Every success saves a rollback snapshot.</div>
+      <div class="phase-tags"><span class="badge">8 LLM nodes</span> <span class="badge green">5 code nodes</span> <span class="badge amber">~50 LLM calls</span></div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">Phase 5</div>
+      <div class="phase-name">Quality</div>
+      <div class="phase-desc">Pattern extractor analyzes completed phase code and injects naming conventions, error handling patterns, and import styles into state — so the next phase generates consistent code.</div>
+      <div class="phase-tags"><span class="badge">1 LLM call per phase</span> <span class="badge cyan">Output: projectPatterns</span></div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">Phase 6</div>
+      <div class="phase-name">Deploy + Verify</div>
+      <div class="phase-desc">Runs docker-compose up and verifies: PostgreSQL running ✅, backend HTTP responding ✅, frontend accessible ✅, API can reach DB ✅. Pure Python — no LLM calls.</div>
+      <div class="phase-tags"><span class="badge green">0 LLM calls</span> <span class="badge cyan">Output: deployment status</span></div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">Phase 7</div>
+      <div class="phase-name">Present to User</div>
+      <div class="phase-desc">Returns final app path, README, docker-compose command, all generated files, and cost summary.</div>
+      <div class="phase-tags"><span class="badge green">Pure code</span> <span class="badge amber">Output: complete app</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- DEV LOOP -->
+<section id="devloop">
+  <h2>🔁 Self-Healing Dev Loop (Deep Dive)</h2>
+  <p class="section-intro">This is the most impressive part — know it cold</p>
+
+  <pre>
+selectNextTask
+     │
+     ▼
+contextBuilder  ←── fetches file registry, patterns, imports
+     │
+     ▼
+ coderAgent  ←─────────────────────────────────────┐
+(1 file/call)                                       │ retry with fix
+     │                                              │
+     ▼                                              │
+reviewerAgent                                       │
+     │                                              │
+  approved? ──NO (≥3 times)──► simplifyTask ────────┘
+     │                         (break into sub-tasks)
+    YES
+     │
+     ▼
+executorAgent (run in Docker)
+     │
+  passed? ──NO──► debuggerAgent
+     │                │
+    YES               ├─ Tier 1: local fix ──────► coderAgent
+     │                ├─ Tier 2: broader context ► coderAgent
+     ▼                ├─ Tier 2.5: rollback snapshot
+snapshotManager       └─ Tier 3: humanEscalation
+(save version)
+     │
+     ▼
+next task
+  </pre>
+
+  <div class="card-grid">
+    <div class="card">
+      <h3>Context Builder</h3>
+      <p>Before coder runs, it resolves dependencies using 3-tier lookup:</p>
+      <ul>
+        <li><strong>Tier 1:</strong> Exact filename match in registry</li>
+        <li><strong>Tier 2:</strong> Fuzzy / partial string match</li>
+        <li><strong>Tier 3:</strong> Disk fallback — regex scan file contents</li>
+      </ul>
+      <div class="tip">Zero LLM tokens — pure Python static analysis</div>
+    </div>
+    <div class="card">
+      <h3>Debugger Escalation</h3>
+      <ul>
+        <li><strong>Tier 1:</strong> Fix with local error context</li>
+        <li><strong>Tier 2:</strong> Fix with broader codebase context</li>
+        <li><strong>Tier 2.5:</strong> Roll back to last good snapshot</li>
+        <li><strong>Tier 3:</strong> Escalate to human — ask for guidance</li>
+      </ul>
+      <div class="warn">Prevents infinite loops while staying resilient</div>
+    </div>
+    <div class="card">
+      <h3>Blueprint Validator (no LLM)</h3>
+      <p>Runs 5 cross-checks after architect phase:</p>
+      <ul>
+        <li>All API routes reference existing DB tables</li>
+        <li>All foreign keys reference valid tables</li>
+        <li>No orphan tables (every table used by an API)</li>
+        <li>Auth consistently applied on protected routes</li>
+        <li>Naming conventions are consistent</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>File Registry</h3>
+      <p>Tracks every generated file with:</p>
+      <ul>
+        <li>File path</li>
+        <li>Exported functions/classes</li>
+        <li>Import statement template</li>
+        <li>Interface/type definitions</li>
+      </ul>
+      <div class="tip">O(1) lookup by filename (Python dict / hashmap)</div>
+    </div>
+  </div>
+</section>
+
+<!-- TOKEN COST -->
+<section id="tokens">
+  <h2>💰 Token Consumption — Todo App</h2>
+  <p class="section-intro">Gemini 2.5 Flash pricing: $0.15/1M input tokens | $0.60/1M output tokens</p>
+
+  <table>
+    <tr><th>Agent</th><th>LLM Calls</th><th>Input Tokens</th><th>Output Tokens</th><th>Est. Cost</th></tr>
+    <tr><td>PM Agent (questions + spec)</td><td>2</td><td>~8,000</td><td>~2,800</td><td>$0.003</td></tr>
+    <tr><td>Architect (5 steps)</td><td>5</td><td>~40,000</td><td>~15,000</td><td>$0.015</td></tr>
+    <tr><td>Planner</td><td>1</td><td>~12,000</td><td>~4,000</td><td>$0.004</td></tr>
+    <tr><td>Coder Agent (21 files)</td><td>21</td><td>~168,000</td><td>~42,000</td><td>$0.051</td></tr>
+    <tr><td>Reviewer (25 reviews)</td><td>25</td><td>~250,000</td><td>~25,000</td><td>$0.052</td></tr>
+    <tr><td>Debugger (~4 failures)</td><td>4</td><td>~32,000</td><td>~8,000</td><td>$0.010</td></tr>
+    <tr><td>Pattern Extractor (7 phases)</td><td>7</td><td>~35,000</td><td>~10,500</td><td>$0.011</td></tr>
+    <tr><td>Deploy / Present</td><td>0</td><td>0</td><td>0</td><td>$0.000</td></tr>
+    <tr style="font-weight:700;"><td>TOTAL</td><td>~65</td><td>~545,000</td><td>~107,300</td><td style="color:#34d399;">~$0.15</td></tr>
+  </table>
+
+  <h3>Where tokens go (by input volume)</h3>
+
+  <div class="token-bar-wrap">
+    <div class="token-bar-label"><span>Reviewer Agent</span><span>46% — 250k tokens</span></div>
+    <div class="token-bar"><div class="token-bar-fill" style="width:46%;background:#7c3aed;"></div></div>
+  </div>
+  <div class="token-bar-wrap">
+    <div class="token-bar-label"><span>Coder Agent</span><span>31% — 168k tokens</span></div>
+    <div class="token-bar"><div class="token-bar-fill" style="width:31%;background:#06b6d4;"></div></div>
+  </div>
+  <div class="token-bar-wrap">
+    <div class="token-bar-label"><span>Architect</span><span>7% — 40k tokens</span></div>
+    <div class="token-bar"><div class="token-bar-fill" style="width:7%;background:#10b981;"></div></div>
+  </div>
+  <div class="token-bar-wrap">
+    <div class="token-bar-label"><span>Pattern Extractor</span><span>6% — 35k tokens</span></div>
+    <div class="token-bar"><div class="token-bar-fill" style="width:6%;background:#f59e0b;"></div></div>
+  </div>
+  <div class="token-bar-wrap">
+    <div class="token-bar-label"><span>Debugger + Others</span><span>10% — ~55k tokens</span></div>
+    <div class="token-bar"><div class="token-bar-fill" style="width:10%;background:#ef4444;"></div></div>
+  </div>
+
+  <div class="card-grid" style="margin-top:20px;">
+    <div class="card">
+      <h3>Cost by App Size</h3>
+      <table>
+        <tr><th>App Type</th><th>Tasks</th><th>Cost</th></tr>
+        <tr><td>Simple Todo (no auth)</td><td>~12</td><td>$0.07</td></tr>
+        <tr><td>Todo + Auth + Categories</td><td>~21</td><td>$0.13</td></tr>
+        <tr><td>Todo + Auth + Real-time</td><td>~30</td><td>$0.20</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Budget Usage</h3>
+      <p>Default budget: <span class="highlight">$2.00</span></p>
+      <p>Todo app uses: <span style="color:#34d399;font-weight:600;">~7% of budget</span></p>
+      <p>Apps per budget: <span class="highlight">~10–12 apps</span></p>
+      <div class="tip">Budget enforced in code — throws <code>TOKEN_BUDGET_EXCEEDED</code> before calling Gemini if limit is reached</div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH QA -->
+<section id="qa-tech">
+  <h2>❓ Technical Q&amp;A — Project Specific</h2>
+  <p class="section-intro">Read Q, cover A, try to answer, then check</p>
+
+  <div class="qa-item">
+    <div class="qa-q">Q1: What is LangGraph and why did you use it over plain Python functions?</div>
+    <div class="qa-a">LangGraph is a library for building stateful, graph-based AI workflows. With 27 nodes, managing state with plain functions becomes spaghetti. LangGraph enforces that all nodes communicate ONLY through a shared state object with defined reducers — making it predictable and debuggable. It also handles conditional routing, loops, and checkpointing natively.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Q2: How does the shared state work? What are reducers?</div>
+    <div class="qa-a">Every node reads from and writes to a single <code>AgentState</code> TypedDict. Reducers define how new values merge with existing ones:<br/><br/>
+    • <strong>last-write</strong>: new value overwrites old (e.g., currentTask)<br/>
+    • <strong>merge_objects</strong>: shallow merge {**old, **new} (e.g., blueprint)<br/>
+    • <strong>accumulate</strong>: append to list (e.g., conversation history, file registry)<br/><br/>
+    This means nodes are pure functions — given state in, produce state out. No side effects.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Q3: What is checkpointing and why is it critical here?</div>
+    <div class="qa-a">After every node, LangGraph serializes the full state and saves it to Redis. A full run takes 30–60 minutes with 100+ API calls. If it crashes at node 20, I resume from node 20 — not the start. Implemented with <code>langgraph-checkpoint-redis</code>, with fallback to in-memory if Redis is unavailable.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Q4: Explain the self-healing dev loop.</div>
+    <div class="qa-a">Core loop: select task → build context → generate code → review → execute in Docker → snapshot.<br/>
+    If execution fails: debugger escalates through 3 tiers (local fix → broader context → rollback → human).<br/>
+    If reviewer rejects 3 times: simplifyTask agent breaks it into smaller subtasks.<br/>
+    Every success saves a snapshot for rollback. This prevents infinite loops while staying resilient.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Q5: Why Docker for code execution? How do you use it in Python?</div>
+    <div class="qa-a">Generated code is untrusted — running on host could delete files, consume resources, or make unauthorized network calls. Docker provides OS-level isolation.<br/>
+    Python's <code>docker</code> SDK is used to: create containers, bind-mount the generated project folder to <code>/app</code>, execute commands via <code>docker exec</code> (e.g., running tests, npm install), and clean up containers when done.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Q6: How do you control LLM costs?</div>
+    <div class="qa-a">Three ways:<br/>
+    1. <strong>Hard token budget</strong> — default $2, configurable via env var, throws exception before calling API if exceeded<br/>
+    2. <strong>15 of 27 nodes use zero LLM calls</strong> — routing, validation, and state management are pure Python<br/>
+    3. <strong>One file per LLM call</strong> — prevents token truncation so no tokens wasted on failed/partial outputs</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Q7: What is the InputBridge pattern for human-in-the-loop?</div>
+    <div class="qa-a">When the system needs human input, it can't block the main process. The agent emits a WebSocket event to the dashboard and awaits an <code>asyncio.Future()</code>. When the user submits their answer via the UI, the WebSocket handler calls <code>future.set_result(answer)</code> which resolves the Future and the agent resumes. The event loop is never blocked.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Q8: How does the Blueprint Validator work? Why no LLM?</div>
+    <div class="qa-a">It's a pure Python function — no LLM. Runs 5 structural checks: all API routes reference existing tables, all foreign keys are valid, no orphan tables, auth consistently applied, naming conventions consistent.<br/><br/>Using code instead of LLM makes it 100% deterministic, instant, and costs zero tokens. LLMs can hallucinate — for validation you want guarantees.</div>
+  </div>
+</section>
+
+<!-- PYTHON QA -->
+<section id="qa-python">
+  <h2>🐍 Python Concepts Q&amp;A</h2>
+
+  <div class="qa-item">
+    <div class="qa-q">Q9: What is asyncio? Where did you use it?</div>
+    <div class="qa-a">asyncio is Python's built-in library for asynchronous concurrent code using an event loop with <code>async/await</code>. Used in:<br/>
+    • FastAPI backend handles multiple WebSocket connections concurrently<br/>
+    • InputBridge uses <code>asyncio.Future()</code> to pause an agent without blocking<br/>
+    • Gemini API calls are async so multiple agents can run without blocking each other</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Q10: What are TypedDicts and why did you use them for AgentState?</div>
+    <div class="qa-a">TypedDicts are Python type hints for dictionaries with defined key-value types. Used for <code>AgentState</code> (30 fields) to: catch type errors at development time, enable IDE autocomplete, serve as documentation, and let LangGraph validate state shape at runtime. Zero runtime overhead — pure annotation.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Q11: What is a generator? How did you use one?</div>
+    <div class="qa-a">A generator uses <code>yield</code> instead of <code>return</code>. It produces values lazily — one at a time — instead of loading everything into memory. When streaming Gemini API responses, the SDK returns a generator of chunks. I iterate it with <code>for chunk in response_stream</code> without loading all chunks into RAM — critical for large code generation responses.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Q12: Difference between deepcopy and shallow copy? Where did you use each?</div>
+    <div class="qa-a">Shallow copy copies the outer object but nested objects share references. Deep copy recursively copies everything independently.<br/><br/>
+    • <strong>Shallow merge</strong> used in <code>merge_objects</code> reducer: <code>{**old_state, **new_updates}</code><br/>
+    • <strong><code>copy.deepcopy(state)</code></strong> used in snapshotManager to save rollback points — must be truly independent copies otherwise modifying active state corrupts the snapshot.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Q13: What OOP principles did you apply?</div>
+    <div class="qa-a">
+    • <strong>Encapsulation</strong> — Each agent class encapsulates its prompt logic and LLM parsing<br/>
+    • <strong>Inheritance</strong> — <code>BaseAgent</code> has common logic (Gemini call, retry, token tracking); specific agents extend it<br/>
+    • <strong>Polymorphism</strong> — All agents implement a <code>.run(state)</code> method; LangGraph calls them uniformly<br/>
+    • <strong>Abstraction</strong> — <code>SandboxManager</code> hides Docker complexity behind <code>create()</code>, <code>execute()</code>, <code>cleanup()</code>
+    </div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Q14: What is a decorator? Give an example.</div>
+    <div class="qa-a">A decorator is a function that wraps another function to add behavior. Example from the project:<br/>
+    <code>@app.post('/api/projects')</code> — FastAPI route decorator maps HTTP POST to an async function<br/>
+    <code>@graph.node</code> — LangGraph node registration<br/>
+    Under the hood, <code>@decorator</code> is syntactic sugar for <code>func = decorator(func)</code>.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Q15: Process vs Thread vs Coroutine — which did you use and why?</div>
+    <div class="qa-a">
+    • <strong>Process</strong>: separate memory, heavy, true parallelism<br/>
+    • <strong>Thread</strong>: shared memory, GIL limits CPU parallelism in Python<br/>
+    • <strong>Coroutine (asyncio)</strong>: single thread, switches at <code>await</code> points — best for I/O-heavy tasks<br/><br/>
+    Used <strong>coroutines</strong> because the workload is I/O-bound (waiting for Gemini API, Redis, Docker) not CPU-bound. asyncio handles 100+ concurrent I/O operations efficiently with one thread.
+    </div>
+  </div>
+</section>
+
+<!-- DSA QA -->
+<section id="qa-dsa">
+  <h2>🧮 DSA Q&amp;A</h2>
+
+  <div class="qa-item">
+    <div class="qa-q">Q16: What data structures did you use in your project?</div>
+    <div class="qa-a">
+    • <strong>Queue (FIFO)</strong> — Task queue: phases processed in order<br/>
+    • <strong>Stack</strong> — Snapshot history: <code>snapshots.append(state)</code> then <code>rollback = snapshots.pop()</code><br/>
+    • <strong>Dict/HashMap</strong> — File registry: O(1) lookup by filename<br/>
+    • <strong>Graph (DAG)</strong> — LangGraph itself: 27 nodes + directed conditional edges<br/>
+    • <strong>List (append-only)</strong> — Event log, conversation history, token call records
+    </div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Q17: What is the time complexity of file registry lookup?</div>
+    <div class="qa-a">
+    • <strong>Exact match</strong>: O(1) average — Python dict is a hash table<br/>
+    • <strong>Fuzzy match</strong>: O(n·m) — linear scan, n=registry size, m=string length<br/>
+    • <strong>Disk fallback</strong>: O(f·c) — scan f files, c chars each<br/><br/>
+    For a typical project (20–30 files) this is negligible. For large codebases, could optimize with a Trie for prefix matching or an inverted index.
+    </div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Q18: Write Python code to detect a cycle in a task dependency graph.</div>
+    <div class="qa-a">
+<pre>def has_cycle(graph: dict[str, list[str]]) -> bool:
+    WHITE, GRAY, BLACK = 0, 1, 2
+    color = {node: WHITE for node in graph}
+
+    def dfs(node):
+        color[node] = GRAY
+        for neighbor in graph.get(node, []):
+            if color[neighbor] == GRAY:   # back edge = cycle
+                return True
+            if color[neighbor] == WHITE and dfs(neighbor):
+                return True
+        color[node] = BLACK
+        return False
+
+    return any(dfs(n) for n in graph if color[n] == WHITE)</pre>
+    DFS with 3-color marking. GRAY = currently in path. Finding a GRAY neighbor means back edge = cycle. <strong>Time: O(V+E)</strong>
+    </div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Q19: Design the database schema for the Todo app your system generates.</div>
+    <div class="qa-a">
+<pre>CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE categories (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id) ON DELETE CASCADE,
+    name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE todos (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id) ON DELETE CASCADE,
+    category_id INT REFERENCES categories(id),
+    title TEXT NOT NULL,
+    due_date DATE,
+    completed BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Indexes for fast lookup
+CREATE INDEX idx_todos_user_id ON todos(user_id);
+CREATE INDEX idx_todos_due_date ON todos(due_date);</pre>
+    </div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Q20: What is indexing? Where would you add indexes in this project?</div>
+    <div class="qa-a">An index is a data structure (usually B-tree) that lets the DB find rows without a full table scan.<br/><br/>
+    In the Todo app: index on <code>todos.user_id</code> (every query filters by user), index on <code>todos.due_date</code> (sorting/filtering by date is common). Without these, every query scans all rows — O(n) instead of O(log n).</div>
+  </div>
+</section>
+
+<!-- AI QA -->
+<section id="qa-ai">
+  <h2>🤖 AI / ML Q&amp;A</h2>
+
+  <div class="qa-item">
+    <div class="qa-q">Q21: What is a Large Language Model (LLM)?</div>
+    <div class="qa-a">An LLM is a deep learning model trained on massive text data using the Transformer architecture. Self-attention mechanisms allow it to weigh relationships between all tokens in the input simultaneously. Given a prompt, it predicts the most probable next tokens. I use Gemini 2.5 Flash which supports up to 65,536 output tokens and native JSON mode.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Q22: What is prompt engineering? Give an example from your project.</div>
+    <div class="qa-a">Crafting input text to guide LLM behavior reliably. Example — coder agent prompt structure:<br/>
+    1. <strong>Role</strong>: "You are an expert backend developer"<br/>
+    2. <strong>Constraint</strong>: "Generate ONLY the file: {task.filename}"<br/>
+    3. <strong>Context</strong>: "Follow these existing patterns: {patterns}" + "Available imports: {file_registry}"<br/>
+    4. <strong>Format</strong>: "Return ONLY valid JSON: {'filename': '...', 'content': '...'}"<br/><br/>
+    Key techniques: role assignment, hard constraints, few-shot examples, strict output format.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Q23: What is a multi-agent system? Why not just one big LLM call?</div>
+    <div class="qa-a">A multi-agent system uses specialized agents for different subtasks. One big LLM call fails because:<br/>
+    • Context window limits (can't hold 25 files + all history)<br/>
+    • Errors compound — one mistake in a long chain corrupts everything downstream<br/>
+    • No specialization — a generalist prompt is worse than a focused prompt<br/><br/>
+    My solution: PM specializes in requirements, Architect in system design, Coder in one file at a time — each with short, focused prompts that fit cleanly in context.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Q24: What is RAG? How does your project implement it?</div>
+    <div class="qa-a">RAG (Retrieval Augmented Generation) combines a retrieval system with an LLM — instead of relying only on training data, relevant documents are retrieved at query time and injected into the prompt.<br/><br/>
+    My contextBuilder is a form of RAG: before the coder generates a file, it retrieves relevant existing files from the file registry and injects them into the prompt as context. This ensures the LLM generates accurate imports, uses real function names, and follows actual patterns from the codebase.</div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-q">Q25: What is the difference between SQL and NoSQL? When does your architect recommend each?</div>
+    <div class="qa-a">
+    • <strong>SQL</strong> (PostgreSQL): Relational, ACID transactions, schema enforced, good for structured data with relationships (users, orders, todos)<br/>
+    • <strong>NoSQL</strong> (MongoDB): Flexible schema, document model, horizontal scaling, good for unstructured or varying data<br/><br/>
+    The architect agent recommends PostgreSQL by default. MongoDB is recommended when the spec mentions "flexible schema", "documents", "high write volume", or "no fixed structure".</div>
+  </div>
+</section>
+
+<!-- TIPS -->
+<section id="tips">
+  <h2>🎯 Interview Tips</h2>
+
+  <div class="card-grid">
+    <div class="card" style="border-color:#10b981;">
+      <h3 style="color:#34d399;">Key Numbers to Memorize</h3>
+      <ul>
+        <li><strong>27</strong> total agents/nodes</li>
+        <li><strong>7</strong> pipeline phases</li>
+        <li><strong>12</strong> LLM nodes, <strong>15</strong> code-only nodes</li>
+        <li><strong>~65</strong> LLM calls for a todo app</li>
+        <li><strong>~$0.13</strong> cost for a todo app</li>
+        <li><strong>$2.00</strong> default token budget</li>
+        <li><strong>65,536</strong> max output tokens (Gemini)</li>
+        <li><strong>3</strong> debugger escalation tiers</li>
+        <li><strong>21</strong> tasks for a todo app</li>
+      </ul>
+    </div>
+
+    <div class="card" style="border-color:#f59e0b;">
+      <h3 style="color:#fbbf24;">Behavioral Questions</h3>
+      <table>
+        <tr><th>Question</th><th>Angle</th></tr>
+        <tr><td>Why this project?</td><td>Passion for AI automation, reducing developer toil</td></tr>
+        <tr><td>Biggest challenge?</td><td>Self-healing loop — 3-tier escalation prevents infinite retries</td></tr>
+        <tr><td>What would you improve?</td><td>Vector DB for smarter RAG, parallel task execution within phases</td></tr>
+        <tr><td>Hardest bug?</td><td>LLM JSON truncation — built 5-tier repair pipeline</td></tr>
+        <tr><td>How does it scale?</td><td>State-driven (no direct calls), Redis checkpoints, Docker isolation</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:#7c3aed;">
+    <h3>Design Decisions — Know the WHY</h3>
+    <table>
+      <tr><th>Decision</th><th>Why</th><th>Trade-off</th></tr>
+      <tr><td>LangGraph over plain functions</td><td>27 nodes need shared state + conditional routing + loops</td><td>Learning curve</td></tr>
+      <tr><td>Checkpoint after every node</td><td>30–60 min runs must survive crashes</td><td>Redis overhead</td></tr>
+      <tr><td>Docker for execution</td><td>Untrusted generated code — OS-level isolation</td><td>Container startup latency</td></tr>
+      <tr><td>WebSocket over polling</td><td>Push-based, instant updates, no wasted HTTP requests</td><td>WebSocket library needed</td></tr>
+      <tr><td>One file per LLM call</td><td>Prevents token truncation — smaller, focused tasks</td><td>More API calls</td></tr>
+      <tr><td>Blueprint validator (no LLM)</td><td>Deterministic — 100% accurate for structural checks</td><td>Can't catch semantic issues</td></tr>
+      <tr><td>3-tier debugger escalation</td><td>Avoid infinite loops, know when to ask human</td><td>Adds complexity</td></tr>
+    </table>
+  </div>
+
+  <div class="card" style="border-color:#06b6d4;margin-top:20px;">
+    <h3 style="color:#38bdf8;">Final 60-Second Pitch</h3>
+    <p style="font-size:0.95rem;line-height:1.9;color:#e2e8f0;">
+      "I built a Python-based autonomous AI development system with <strong>27 specialized agents</strong> orchestrated by <strong>LangGraph</strong>. You type a requirement like 'build a todo app' and the system handles everything — PM agent clarifies the spec, Architect designs DB schema and APIs in 5 steps, Planner creates 21 tasks and spins up Docker containers, then a self-healing Dev Loop writes every file using Gemini 2.5 Flash, has a Reviewer approve it, tests it in Docker, and if it fails, a 3-tier Debugger escalates from auto-fix to rollback to human escalation. <strong>Redis checkpoints</strong> state after every node for crash recovery. The whole thing costs <strong>~$0.13</strong> for a todo app — a full run in under 2 minutes."
+    </p>
+  </div>
+
+  <div class="warn" style="margin-top:20px;">
+    ⚠️ <strong>Remember:</strong> You listed this as a Python project on your resume. The backend server is FastAPI (Python), orchestration is LangGraph Python, Gemini calls use <code>google-generativeai</code> Python SDK, Docker management uses <code>docker-py</code> SDK. The React dashboard is a separate frontend layer.
+  </div>
+</section>
+
+</div>
+
+<div style="text-align:center;padding:30px;color:#475569;font-size:0.8rem;">
+  All the best for your TCS Prime Interview! 🎯
+</div>
+
+</body>
+</html>
