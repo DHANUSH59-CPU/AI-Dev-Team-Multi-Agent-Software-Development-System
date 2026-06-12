@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AI Dev Team — Interview Prep Notes</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #d6cfc4;
+  background-image:
+    radial-gradient(ellipse at 30% 20%, rgba(180,165,145,0.4) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 80%, rgba(160,148,130,0.3) 0%, transparent 50%);
+  font-family: Georgia, 'Times New Roman', serif;
+  color: #1c1a17;
+  line-height: 1.82;
+  padding: 28px 16px 60px;
+}
+
+/* ── STICKY NAV ── */
+.topnav {
+  position: sticky; top: 0; z-index: 200;
+  background: #2c2416;
+  display: flex; flex-wrap: wrap; gap: 0;
+  padding: 0 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+.topnav a {
+  color: #c8b99a; text-decoration: none;
+  padding: 11px 14px; font-size: 0.78rem;
+  font-family: 'Trebuchet MS', sans-serif;
+  letter-spacing: 0.3px;
+  border-bottom: 3px solid transparent;
+  transition: 0.2s;
+}
+.topnav a:hover { color: #f5e6cc; border-bottom-color: #c8a96e; }
+
+/* ── PAPER PAGE ── */
+.page {
+  background: #faf8f3;
+  max-width: 900px;
+  margin: 26px auto;
+  box-shadow:
+    0 1px 1px rgba(0,0,0,0.15),
+    0 4px 16px rgba(0,0,0,0.12),
+    inset 0 0 0 1px rgba(0,0,0,0.03);
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+/* red margin line */
+.page::before {
+  content: '';
+  position: absolute;
+  left: 80px; top: 0; bottom: 0;
+  width: 1px;
+  background: rgba(196,30,58,0.25);
+  pointer-events: none;
+}
+/* ruled lines */
+.page::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(
+    transparent, transparent 31px, rgba(180,165,140,0.22) 31px, rgba(180,165,140,0.22) 32px
+  );
+  pointer-events: none;
+}
+
+.page-inner {
+  position: relative; z-index: 1;
+  padding: 48px 56px 52px 100px;
+}
+
+/* ── COVER ── */
+.cover {
+  padding: 64px 56px 56px 100px;
+  border-bottom: 2px solid rgba(0,0,0,0.08);
+}
+.cover .subject {
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
+  color: #8a7a68; margin-bottom: 10px;
+}
+.cover h1 {
+  font-size: 2rem; font-weight: bold; line-height: 1.3;
+  color: #1c1a17; margin-bottom: 12px;
+}
+.cover .byline {
+  font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+  font-size: 0.9rem; color: #1e40af;
+  margin-bottom: 24px;
+}
+.cover .intro-box {
+  border-left: 4px solid #2c2416;
+  padding: 14px 20px;
+  background: rgba(255,255,255,0.7);
+  font-size: 0.95rem;
+  max-width: 640px;
+}
+
+/* ── SECTION HEADING ── */
+h2 {
+  font-size: 1.25rem; font-weight: bold;
+  margin: 36px 0 14px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #1c1a17;
+  display: flex; justify-content: space-between; align-items: baseline;
+}
+h2 .pg { font-family: 'Comic Sans MS', cursive; font-size: 0.7rem; color: #999; font-weight: normal; }
+h3 { font-size: 1rem; font-weight: bold; margin: 22px 0 8px; }
+h4 { font-size: 0.9rem; font-style: italic; margin: 16px 0 6px; color: #444; }
+p { margin-bottom: 12px; font-size: 0.93rem; }
+ul, ol { padding-left: 22px; margin-bottom: 12px; }
+li { margin-bottom: 5px; font-size: 0.91rem; }
+strong { color: #1c1a17; }
+
+/* ── ANNOTATIONS ── */
+.red    { color: #c41e3a; }
+.blue   { color: #1e40af; font-style: italic; }
+.green  { color: #166534; }
+mark    { background: rgba(253,224,71,0.55); padding: 0 2px; border-radius: 1px; }
+.hl-blue { background: rgba(147,197,253,0.4); padding: 0 2px; border-radius: 1px; }
+.hl-green { background: rgba(134,239,172,0.45); padding: 0 2px; border-radius: 1px; }
+
+.hand {
+  font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+  font-size: 0.9em;
+}
+.aside-note {
+  font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+  font-size: 0.78rem; color: #c41e3a;
+  margin: -6px 0 10px 0; display: block;
+}
+.star { color: #c41e3a; font-size: 1.1em; }
+
+/* ── MARGIN + CONTENT layout ── */
+.with-margin {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 20px;
+  margin: 14px 0;
+}
+.margin-note {
+  font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+  font-size: 0.76rem; color: #c41e3a;
+  line-height: 1.5; text-align: right;
+  padding-right: 14px;
+  border-right: 1px solid rgba(196,30,58,0.2);
+}
+.margin-note.blue { color: #1e40af; }
+.margin-note.green { color: #166534; }
+
+/* ── POST-IT ── */
+.postit {
+  background: #fef9c3;
+  border-top: 4px solid #eab308;
+  padding: 14px 18px 16px;
+  margin: 20px 0; margin-left: -8px;
+  font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+  font-size: 0.86rem; color: #1c1a17;
+  box-shadow: 3px 4px 10px rgba(0,0,0,0.13);
+  transform: rotate(-0.6deg);
+  max-width: 520px;
+}
+.postit.pink { background: #fce7f3; border-top-color: #ec4899; transform: rotate(0.4deg); }
+.postit.blue { background: #dbeafe; border-top-color: #3b82f6; transform: rotate(-0.3deg); margin-left: auto; margin-right: -8px; }
+.postit.green { background: #dcfce7; border-top-color: #22c55e; transform: rotate(0.8deg); }
+.postit strong { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 4px; opacity: 0.6; }
+
+/* ── CALLOUT ── */
+.callout {
+  border: 1.5px solid #1c1a17;
+  padding: 14px 18px;
+  margin: 18px 0;
+  background: rgba(255,255,255,0.5);
+  position: relative;
+}
+.callout[data-label]::before {
+  content: attr(data-label);
+  position: absolute; top: -10px; left: 12px;
+  background: #faf8f3; padding: 0 7px;
+  font-family: 'Comic Sans MS', cursive; font-size: 0.75rem; font-weight: bold;
+}
+
+/* ── TABLE ── */
+table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 0.87rem; }
+th {
+  border-bottom: 2px solid #1c1a17; border-top: 1.5px solid #1c1a17;
+  padding: 8px 11px; text-align: left; font-weight: bold;
+  background: rgba(0,0,0,0.04);
+}
+td { border-bottom: 1px solid #d6cfc4; padding: 7px 11px; vertical-align: top; }
+.tfoot td { border-top: 2px solid #1c1a17; font-weight: bold; border-bottom: none; }
+
+/* ── CODE ── */
+code {
+  font-family: 'Courier New', Courier, monospace;
+  background: rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.12);
+  padding: 1px 5px; border-radius: 2px; font-size: 0.84em;
+}
+pre {
+  font-family: 'Courier New', Courier, monospace;
+  background: #f0ece4; border: 1px solid #ccc6bc;
+  padding: 16px 18px; font-size: 0.82rem; overflow-x: auto;
+  margin: 12px 0; line-height: 1.65;
+  position: relative;
+}
+
+/* ── DIAGRAM WRAPPER ── */
+.sketch { background: white; border: 1.5px solid #555; padding: 12px; margin: 20px 0; }
+.sketch-cap {
+  text-align: center;
+  font-family: 'Comic Sans MS', cursive; font-size: 0.74rem; color: #777;
+  margin-top: 6px;
+}
+
+/* ── DIVIDER ── */
+.divider {
+  border: none; border-top: 1px solid rgba(0,0,0,0.12);
+  margin: 32px -56px 32px -100px;
+}
+
+/* ── Q&A ── */
+.qa { margin: 16px 0; padding: 14px 18px; background: rgba(255,255,255,0.55); border-left: 3px solid #1c1a17; }
+.qa .q { font-weight: bold; font-size: 0.91rem; margin-bottom: 8px; }
+.qa .q::before { content: 'Q: '; color: #c41e3a; }
+.qa .a { font-size: 0.89rem; color: #2a2620; }
+.qa .a::before { content: 'A: '; font-style: italic; color: #1e40af; font-weight: bold; }
+
+/* ── NUMBER BOX ── */
+.num-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 18px 0; }
+.num-box {
+  border: 2px solid #1c1a17; padding: 14px 12px; text-align: center;
+  background: rgba(255,255,255,0.6);
+  position: relative;
+}
+.num-box .big {
+  font-size: 2.1rem; font-weight: 900; display: block;
+  font-family: Georgia, serif; line-height: 1.1;
+}
+.num-box .lbl { font-size: 0.73rem; color: #666; display: block; margin-top: 2px; }
+.num-box .why {
+  font-family: 'Comic Sans MS', cursive; font-size: 0.72rem;
+  color: #c41e3a; margin-top: 8px; display: block;
+}
+.num-box.important { border-color: #c41e3a; border-width: 2.5px; }
+
+/* ── PHASE TIMELINE ── */
+.timeline { display: flex; flex-direction: column; gap: 0; padding-left: 32px; position: relative; }
+.timeline::before {
+  content: ''; position: absolute;
+  left: 7px; top: 12px; bottom: 12px; width: 2px;
+  background: #1c1a17;
+}
+.tl-item { display: flex; align-items: flex-start; gap: 18px; margin-bottom: 20px; position: relative; }
+.tl-dot {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 2.5px solid #1c1a17; background: #faf8f3;
+  flex-shrink: 0; margin-top: 4px; margin-left: -40px;
+  z-index: 1;
+}
+.tl-dot.filled { background: #1c1a17; }
+.tl-dot.star-dot {
+  background: #c41e3a; border-color: #c41e3a;
+  width: 20px; height: 20px; margin-left: -42px; margin-top: 2px;
+}
+.tl-content { flex: 1; }
+.tl-head { font-weight: bold; font-size: 0.95rem; margin-bottom: 3px; }
+.tl-desc { font-size: 0.87rem; color: #3a3530; }
+.tl-tag { font-family: 'Courier New', monospace; font-size: 0.76rem; background: rgba(0,0,0,0.06); padding: 1px 6px; border-radius: 2px; margin-left: 8px; }
+
+/* ── BARS (token chart) ── */
+.bar-item { margin: 9px 0; display: grid; grid-template-columns: 160px 1fr 70px; gap: 10px; align-items: center; font-size: 0.83rem; }
+.bar-track { height: 14px; background: rgba(0,0,0,0.08); border: 1px solid rgba(0,0,0,0.15); }
+.bar-fill { height: 100%; }
+
+@media(max-width:640px){
+  .page::before { left: 50px; }
+  .page-inner, .cover { padding: 32px 24px 36px 60px; }
+  .with-margin { grid-template-columns: 1fr; }
+  .margin-note { text-align: left; border-right: none; padding-right: 0; border-bottom: 1px solid rgba(196,30,58,0.2); padding-bottom: 4px; }
+  .divider { margin: 20px -24px 20px -60px; }
+  .bar-item { grid-template-columns: 1fr; gap: 3px; }
+}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <a href="#idea">The Idea</a>
+  <a href="#arch">Architecture</a>
+  <a href="#phases">7 Phases</a>
+  <a href="#loop">Dev Loop</a>
+  <a href="#tokens">Token Cost</a>
+  <a href="#qa">Q &amp; A</a>
+  <a href="#numbers">Numbers</a>
+  <a href="#pitch">Final Pitch</a>
+</div>
+
+<!-- ═══════════════════════════ COVER ═══════════════════════════ -->
+<div class="page">
+  <div class="cover">
+    <div class="subject">TCS Prime Interview — Project Notes</div>
+    <h1>AI Dev Team<br/>Multi-Agent Software Development System</h1>
+    <div class="byline">Written for interview prep &nbsp;·&nbsp; Python stack &nbsp;·&nbsp; June 2026</div>
+    <div class="intro-box">
+      This system takes a plain-English requirement — like <em>"build a todo app"</em> — and
+      fully autonomously generates a working, deployed application. Backend, database, frontend.
+      No human writing code. It uses <strong>27 AI agents</strong> orchestrated through a graph pipeline,
+      powered by <strong>Google Gemini 2.5</strong>, running generated code safely in <strong>Docker</strong>,
+      and saving state to <strong>Redis</strong> after every step. Total cost for a todo app: about
+      <mark>13 cents</mark>.
+    </div>
+
+    <div style="margin-top:24px; display:flex; gap:24px; flex-wrap:wrap;">
+      <div>
+        <div style="font-size:0.74rem;text-transform:uppercase;letter-spacing:1px;color:#999;margin-bottom:4px;">Core stack (Python)</div>
+        <div style="font-family:'Courier New',monospace;font-size:0.83rem;line-height:2">
+          LangGraph &nbsp;·&nbsp; FastAPI &nbsp;·&nbsp; google-generativeai<br/>
+          redis-py &nbsp;·&nbsp; docker (Python SDK) &nbsp;·&nbsp; asyncio
+        </div>
+      </div>
+      <div class="postit" style="margin:0;transform:rotate(1.2deg);flex-shrink:0">
+        <strong>Remember</strong>
+        I said Python on my resume.<br/>
+        Backend = FastAPI, not Node.<br/>
+        Orchestration = LangGraph (Python).
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ THE IDEA ═══════════════════════════ -->
+<div class="page" id="idea">
+<div class="page-inner">
+  <h2>What Is This Thing? <span class="pg">§1</span></h2>
+
+  <p>
+    Think of it as a <mark>software company staffed entirely by AI</mark>. A customer
+    walks in and says "build me a todo app." A Project Manager asks clarifying questions.
+    An Architect draws up the blueprint. A Planner writes the task board. Coders write one
+    file at a time. A Reviewer checks each file. A Tester runs it in a sealed room. A
+    Debugger fixes failures. And a Photographer takes a snapshot after every step so nothing
+    is ever lost.
+  </p>
+  <p>
+    The "sealed room" is <strong>Docker</strong>. The "photographer" is <strong>Redis</strong>.
+    The whole company is wired together by <strong>LangGraph</strong>. The brain every
+    employee calls when they need to think is <strong>Google Gemini 2.5 Flash</strong>.
+  </p>
+
+  <div class="postit blue" style="max-width:none">
+    <strong>The one-sentence answer (say this first in interviews)</strong>
+    "I built a Python system with 27 specialized AI agents that turns a plain-English requirement
+    into a fully deployed application — backend, database, frontend — using LangGraph,
+    Gemini, Docker, and Redis, for about 13 cents per app."
+  </div>
+
+  <h3>Why does this matter to an interviewer?</h3>
+  <p>
+    It touches almost everything they care about: <span class="hl-blue">LLM integration</span>,
+    <span class="hl-blue">system design</span>, <span class="hl-green">state management</span>,
+    <span class="hl-green">Docker/containers</span>, <span class="hl-blue">async Python</span>,
+    databases, REST APIs, WebSockets, error handling, and cost optimization — all in one project.
+    When you describe it well, they have no choice but to keep asking follow-up questions.
+    That is the position you want to be in.
+  </p>
+  <span class="aside-note">← lean into this. let them ask questions.</span>
+
+  <hr class="divider"/>
+
+  <h3>The Three Characters to Always Mention</h3>
+  <div class="with-margin">
+    <div class="margin-note">anchor these<br/>to memory first</div>
+    <div>
+      <table>
+        <tr>
+          <th>Character</th><th>Technology</th><th>Role in the story</th>
+        </tr>
+        <tr>
+          <td><strong>🧠 The Brain</strong></td>
+          <td><code>google-generativeai</code> (Gemini 2.5)</td>
+          <td>Called by 12 agents when they need to reason or generate code. <mark>~65 calls per app.</mark></td>
+        </tr>
+        <tr>
+          <td><strong>🔒 The Glass Room</strong></td>
+          <td><code>docker</code> Python SDK</td>
+          <td>Generated code runs here, isolated from the host. If it deletes files, it only deletes inside the room.</td>
+        </tr>
+        <tr>
+          <td><strong>📸 The Photographer</strong></td>
+          <td><code>redis-py</code> + LangGraph checkpointing</td>
+          <td>Saves full state after every node. Crash at node 20, resume at node 20. Not from scratch.</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════ ARCHITECTURE ═══════════════════════════ -->
+<div class="page" id="arch">
+<div class="page-inner">
+  <h2>Architecture — Draw This On The Whiteboard <span class="pg">§2</span></h2>
+  <p style="font-size:0.85rem;color:#666;margin-bottom:16px;font-style:italic;">
+    Practice drawing this while talking. Top to bottom, then three boxes at the base. Takes about 90 seconds.
+  </p>
+
+  <!-- ARCHITECTURE SVG (whiteboard sketch style) -->
+  <div class="sketch">
+  <svg viewBox="0 0 820 590" width="100%" style="min-width:560px; font-family:Georgia,serif;">
+    <defs>
+      <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.045 0.06" numOctaves="3" seed="7" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <marker id="a" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto">
+        <path d="M 1 1 L 11 6 L 1 11" stroke="#333" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </marker>
+      <marker id="ared" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto">
+        <path d="M 1 1 L 11 6 L 1 11" stroke="#c41e3a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </marker>
+    </defs>
+
+    <!-- User box -->
+    <path d="M 258 14 L 563 12 L 565 58 L 256 60 Z" fill="#fefce8" stroke="#333" stroke-width="2" stroke-linejoin="round" filter="url(#rough)"/>
+    <text x="410" y="38" text-anchor="middle" font-size="14" font-weight="bold">USER</text>
+    <text x="410" y="53" text-anchor="middle" font-size="10" fill="#666" font-style="italic">"Build a todo app with categories"</text>
+
+    <line x1="410" y1="61" x2="410" y2="96" stroke="#333" stroke-width="2" marker-end="url(#a)" stroke-dasharray="5,4"/>
+
+    <!-- React Dashboard -->
+    <path d="M 178 98 L 644 96 L 646 148 L 176 150 Z" fill="#eff6ff" stroke="#1e40af" stroke-width="2" stroke-linejoin="round" filter="url(#rough)"/>
+    <text x="410" y="122" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#1e40af">React Dashboard (frontend)</text>
+    <text x="410" y="141" text-anchor="middle" font-size="10" fill="#666">real-time pipeline view · token cost bar · human Q&amp;A panel</text>
+    <text x="648" y="118" font-size="9" fill="#c41e3a" font-family="'Comic Sans MS',cursive">WebSocket</text>
+    <text x="648" y="130" font-size="9" fill="#c41e3a" font-family="'Comic Sans MS',cursive">(push, not poll)</text>
+
+    <line x1="410" y1="151" x2="410" y2="186" stroke="#333" stroke-width="2" marker-end="url(#a)" stroke-dasharray="5,4"/>
+
+    <!-- FastAPI -->
+    <path d="M 178 188 L 644 186 L 646 238 L 176 240 Z" fill="#f0fdf4" stroke="#166534" stroke-width="2" stroke-linejoin="round" filter="url(#rough)"/>
+    <text x="410" y="212" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#166534">FastAPI Backend (Python)</text>
+    <text x="410" y="231" text-anchor="middle" font-size="10" fill="#555">REST /api/projects · WebSocket /ws · Graph Runner Service · InputBridge</text>
+
+    <line x1="410" y1="241" x2="410" y2="276" stroke="#333" stroke-width="2" marker-end="url(#a)" stroke-dasharray="5,4"/>
+
+    <!-- LangGraph box -->
+    <path d="M 60 278 L 760 275 L 763 398 L 57 401 Z" fill="#fafaf5" stroke="#333" stroke-width="2.5" stroke-linejoin="round" filter="url(#rough)"/>
+    <text x="410" y="302" text-anchor="middle" font-size="15" font-weight="bold">LangGraph Engine — 27 Agents / Nodes</text>
+
+    <!-- mini pipeline inside -->
+    <g font-size="10.5" font-weight="bold" text-anchor="middle">
+      <rect x="78" y="316" width="88" height="30" rx="4" fill="#faf8f3" stroke="#888" stroke-width="1.5"/>
+      <text x="122" y="336">PM Agent</text>
+      <rect x="186" y="316" width="100" height="30" rx="4" fill="#faf8f3" stroke="#888" stroke-width="1.5"/>
+      <text x="236" y="336">Architect</text>
+      <rect x="306" y="316" width="88" height="30" rx="4" fill="#faf8f3" stroke="#888" stroke-width="1.5"/>
+      <text x="350" y="336">Planner</text>
+      <rect x="414" y="312" width="100" height="38" rx="4" fill="#fff0f0" stroke="#c41e3a" stroke-width="2.5"/>
+      <text x="464" y="330" fill="#c41e3a">Dev Loop</text>
+      <text x="464" y="346" fill="#c41e3a" font-size="9">⭐ self-healing core</text>
+      <rect x="534" y="316" width="88" height="30" rx="4" fill="#faf8f3" stroke="#888" stroke-width="1.5"/>
+      <text x="578" y="336">Quality</text>
+      <rect x="642" y="316" width="88" height="30" rx="4" fill="#faf8f3" stroke="#888" stroke-width="1.5"/>
+      <text x="686" y="336">Deploy</text>
+
+      <line x1="166" y1="331" x2="184" y2="331" stroke="#888" stroke-width="1.5" marker-end="url(#a)"/>
+      <line x1="286" y1="331" x2="304" y2="331" stroke="#888" stroke-width="1.5" marker-end="url(#a)"/>
+      <line x1="394" y1="331" x2="412" y2="331" stroke="#888" stroke-width="1.5" marker-end="url(#a)"/>
+      <line x1="514" y1="331" x2="532" y2="331" stroke="#888" stroke-width="1.5" marker-end="url(#a)"/>
+      <line x1="622" y1="331" x2="640" y2="331" stroke="#888" stroke-width="1.5" marker-end="url(#a)"/>
+    </g>
+
+    <text x="410" y="384" text-anchor="middle" font-size="10" fill="#888" font-style="italic">shared state + reducers · conditional routing · checkpoint after EVERY node</text>
+
+    <!-- Three bases -->
+    <line x1="200" y1="402" x2="165" y2="444" stroke="#333" stroke-width="1.8" marker-end="url(#a)" stroke-dasharray="4,3"/>
+    <line x1="410" y1="402" x2="410" y2="444" stroke="#333" stroke-width="1.8" marker-end="url(#a)" stroke-dasharray="4,3"/>
+    <line x1="618" y1="402" x2="648" y2="444" stroke="#333" stroke-width="1.8" marker-end="url(#a)" stroke-dasharray="4,3"/>
+
+    <!-- Gemini -->
+    <path d="M 34 445 L 298 443 L 300 560 L 32 562 Z" fill="#f5f3ff" stroke="#6d28d9" stroke-width="2" stroke-linejoin="round" filter="url(#rough)"/>
+    <text x="166" y="472" text-anchor="middle" font-size="13" font-weight="bold" fill="#5b21b6">🧠 Gemini 2.5 Flash</text>
+    <text x="166" y="493" text-anchor="middle" font-size="9.5" fill="#555">12 agents call this</text>
+    <text x="166" y="509" text-anchor="middle" font-size="9.5" fill="#555">~65 calls per todo app</text>
+    <text x="166" y="525" text-anchor="middle" font-size="9.5" fill="#555">$0.15/1M in · $0.60/1M out</text>
+    <text x="166" y="546" text-anchor="middle" font-size="9" fill="#c41e3a" font-family="'Comic Sans MS',cursive">Output is 4× more expensive!</text>
+
+    <!-- Docker -->
+    <path d="M 308 445 L 514 443 L 516 560 L 306 562 Z" fill="#f0f9ff" stroke="#0284c7" stroke-width="2" stroke-linejoin="round" filter="url(#rough)"/>
+    <text x="411" y="472" text-anchor="middle" font-size="13" font-weight="bold" fill="#0369a1">🔒 Docker Sandbox</text>
+    <text x="411" y="493" text-anchor="middle" font-size="9.5" fill="#555">3 containers per project:</text>
+    <text x="411" y="509" text-anchor="middle" font-size="9.5" fill="#555">PostgreSQL + Backend + Frontend</text>
+    <text x="411" y="525" text-anchor="middle" font-size="9.5" fill="#555">code runs isolated, can't hurt host</text>
+    <text x="411" y="546" text-anchor="middle" font-size="9" fill="#c41e3a" font-family="'Comic Sans MS',cursive">"The Glass Room"</text>
+
+    <!-- Redis -->
+    <path d="M 524 445 L 790 443 L 792 560 L 522 562 Z" fill="#fff1f2" stroke="#be123c" stroke-width="2" stroke-linejoin="round" filter="url(#rough)"/>
+    <text x="657" y="472" text-anchor="middle" font-size="13" font-weight="bold" fill="#be123c">📸 Redis</text>
+    <text x="657" y="493" text-anchor="middle" font-size="9.5" fill="#555">checkpoint after EVERY node</text>
+    <text x="657" y="509" text-anchor="middle" font-size="9.5" fill="#555">crash at node 20 → resume at 20</text>
+    <text x="657" y="525" text-anchor="middle" font-size="9.5" fill="#555">fallback: in-memory if Redis is down</text>
+    <text x="657" y="546" text-anchor="middle" font-size="9" fill="#c41e3a" font-family="'Comic Sans MS',cursive">"The Photographer"</text>
+  </svg>
+  </div>
+  <div class="sketch-cap">Fig 1. Full system architecture — draw top-to-bottom, explain each layer as you draw it</div>
+
+  <div class="postit green" style="max-width:none;margin-top:20px;">
+    <strong>What to say while drawing this</strong>
+    "At the top is the user. The React dashboard shows the pipeline live over WebSocket — push, not polling.
+    FastAPI is the Python backend that starts the LangGraph run and bridges human input.
+    LangGraph orchestrates 27 agents through a shared state. At the base: Gemini is the brain called
+    by 12 agents, Docker is the isolated room where generated code runs safely, and Redis takes
+    a snapshot after every single node so we can always recover from a crash."
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════ 7 PHASES ═══════════════════════════ -->
+<div class="page" id="phases">
+<div class="page-inner">
+  <h2>The 7 Phases — Walk Through These Calmly <span class="pg">§3</span></h2>
+
+  <div class="postit" style="margin-bottom:24px">
+    <strong>Memory sentence — say it 3 times</strong>
+    <strong style="font-size:1rem">"Please All Programmers: Don't Quit During Production"</strong><br/>
+    PM → Architect → Planner → Dev Loop → Quality → Deploy → Present
+  </div>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot filled"></div>
+      <div class="tl-content">
+        <div class="tl-head">Phase 1 — PM Agent <span class="tl-tag">2 LLM calls</span></div>
+        <div class="tl-desc">
+          Takes the user's vague requirement and turns it into a structured specification.
+          If it's ambiguous, asks <mark>3 to 8 clarifying questions</mark> — one call for questions,
+          one call for the final spec. Output: <code>clarifiedSpec</code> (app name, features, pages,
+          DB recommendation, user roles). Questions come through the terminal or dashboard WebSocket.
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot filled"></div>
+      <div class="tl-content">
+        <div class="tl-head">Phase 2 — Architect <span class="tl-tag">5 LLM calls + 1 validator (free)</span></div>
+        <div class="tl-desc">
+          Five sequential steps, one LLM call each: entities &amp; naming conventions, DB schema,
+          API endpoints, frontend pages, folder structure. Then the
+          <strong>Blueprint Validator</strong> — <span class="red">pure Python, zero tokens</span> —
+          does 5 cross-checks (routes reference real tables, valid foreign keys, no orphan tables,
+          consistent auth, consistent naming). Use this to show off: "I chose deterministic code
+          validation over LLM validation because you need guarantees, not probabilities."
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot filled"></div>
+      <div class="tl-content">
+        <div class="tl-head">Phase 3 — Planner + Sandbox <span class="tl-tag">1 LLM call</span></div>
+        <div class="tl-desc">
+          Planner breaks the blueprint into <mark>15–25 ordered tasks</mark> across 7 sub-phases
+          (setup, models, middleware, backend routes, frontend pages, integration, deployment).
+          Then spins up 3 Docker containers — PostgreSQL (or MongoDB), Node backend, React frontend —
+          all on the same Docker network. Health-checks that all three can communicate before proceeding.
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot star-dot"></div>
+      <div class="tl-content">
+        <div class="tl-head" style="color:#c41e3a">Phase 4 — Dev Loop ⭐ THE CORE <span class="tl-tag" style="background:#fff0f0;border:1px solid #c41e3a">~50 LLM calls</span></div>
+        <div class="tl-desc">
+          13 nodes that cycle through every task. Code → Review → Execute in Docker → Snapshot.
+          When something fails, the Debugger escalates through 3 tiers. When the reviewer rejects
+          3 times, the task gets simplified. Every success saves a rollback snapshot. This is where
+          ~80% of the interesting engineering is. <span class="red">See Section 4 for the full diagram.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-head">Phase 5 — Quality <span class="tl-tag">1 call per phase</span></div>
+        <div class="tl-desc">
+          After each dev phase completes, a Pattern Extractor reads the finished code and identifies
+          conventions — error handling format, naming style, import patterns — and injects these into
+          the shared state. The next phase's coder reads these patterns, keeping the whole codebase
+          consistent. Without this, each phase's code looks like it was written by a different person.
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-head">Phase 6 — Deploy <span class="tl-tag">0 LLM calls</span></div>
+        <div class="tl-desc">
+          Runs <code>docker-compose up</code> and verifies: PostgreSQL is running ✓, backend HTTP
+          responds ✓, frontend is accessible ✓, API can reach the database ✓.
+          Pure Python — no LLM tokens spent. If verification fails, the Debugger agent is called.
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-head">Phase 7 — Present <span class="tl-tag">0 LLM calls</span></div>
+        <div class="tl-desc">
+          Returns the final app path, docker-compose command, generated README, all files, and a
+          cost summary. Done. The user has a working app.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider"/>
+
+  <h3>Important counts to mention</h3>
+  <div class="with-margin">
+    <div class="margin-note">they may ask<br/>how many nodes<br/>are "free"</div>
+    <div>
+      <p>
+        Out of 27 nodes, only <strong>12 call the LLM</strong>. The other
+        <strong>15 are pure Python</strong> — routing, validation, file I/O, Docker management,
+        state compaction. This is worth saying explicitly: <em>"I deliberately minimized LLM calls.
+        15 of 27 nodes spend zero tokens because deterministic code is faster, cheaper, and more reliable
+        than asking an AI."</em> Interviewers genuinely appreciate this kind of thinking.
+      </p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════ DEV LOOP ═══════════════════════════ -->
+<div class="page" id="loop">
+<div class="page-inner">
+  <h2>The Dev Loop — The Hard Part, Explained Clearly <span class="pg">§4</span></h2>
+  <span class="aside-note">← "What happens when code fails?" — this is what they're really asking</span>
+
+  <div class="postit" style="margin-bottom:20px;">
+    <strong>Memory — the 6 steps</strong>
+    <strong>"Some Coders Can Really Execute Snapshots"</strong><br/>
+    Select → Context → Code → Review → Execute → Snapshot
+  </div>
+
+  <!-- DEV LOOP SVG -->
+  <div class="sketch">
+  <svg viewBox="0 0 820 600" width="100%" style="min-width:560px;font-family:Georgia,serif;">
+    <defs>
+      <filter id="r2" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.05 0.07" numOctaves="3" seed="12" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="1.4" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <marker id="b" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M 1 2 L 10 6 L 1 10" stroke="#444" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </marker>
+      <marker id="bred" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M 1 2 L 10 6 L 1 10" stroke="#c41e3a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </marker>
+      <marker id="bgrn" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M 1 2 L 10 6 L 1 10" stroke="#166534" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </marker>
+    </defs>
+
+    <!-- Main column nodes -->
+    <g text-anchor="middle" font-size="13">
+
+      <!-- selectNextTask -->
+      <path d="M 268 12 L 552 10 L 554 50 L 266 52 Z" fill="#fafaf5" stroke="#444" stroke-width="2" stroke-linejoin="round" filter="url(#r2)"/>
+      <text x="410" y="36" font-weight="bold">selectNextTask</text>
+      <text x="600" y="34" font-size="9" fill="#666" text-anchor="start" font-style="italic">picks next pending task from queue</text>
+
+      <line x1="410" y1="53" x2="410" y2="88" stroke="#444" stroke-width="1.8" marker-end="url(#b)" stroke-dasharray="5,4"/>
+
+      <!-- contextBuilder -->
+      <path d="M 248 90 L 572 88 L 574 130 L 246 132 Z" fill="#fafaf5" stroke="#1e40af" stroke-width="1.8" stroke-linejoin="round" filter="url(#r2)"/>
+      <text x="410" y="114" font-weight="bold" fill="#1e40af">contextBuilder</text>
+      <text x="576" y="108" font-size="9" fill="#1e40af" text-anchor="start">fetches: file registry</text>
+      <text x="576" y="122" font-size="9" fill="#1e40af" text-anchor="start">patterns, imports</text>
+      <text x="410" y="128" font-size="9" fill="#666" font-style="italic">3-tier lookup: exact → fuzzy → disk scan &nbsp;|&nbsp; 0 tokens</text>
+
+      <line x1="410" y1="133" x2="410" y2="168" stroke="#444" stroke-width="1.8" marker-end="url(#b)" stroke-dasharray="5,4"/>
+
+      <!-- coderAgent -->
+      <path d="M 248 170 L 572 168 L 574 212 L 246 214 Z" fill="#fff8f0" stroke="#c41e3a" stroke-width="2.2" stroke-linejoin="round" filter="url(#r2)"/>
+      <text x="410" y="192" font-weight="bold" fill="#c41e3a">coderAgent</text>
+      <text x="410" y="208" font-size="9" fill="#666" font-style="italic">generates ONE file per call · max 65,536 output tokens</text>
+
+      <line x1="410" y1="215" x2="410" y2="250" stroke="#444" stroke-width="1.8" marker-end="url(#b)" stroke-dasharray="5,4"/>
+
+      <!-- reviewerAgent -->
+      <path d="M 268 252 L 552 250 L 554 292 L 266 294 Z" fill="#fafaf5" stroke="#444" stroke-width="1.8" stroke-linejoin="round" filter="url(#r2)"/>
+      <text x="410" y="276" font-weight="bold">reviewerAgent</text>
+      <text x="410" y="290" font-size="9" fill="#666" font-style="italic">approves, rejects, or flags for simplification</text>
+
+      <!-- reject ≥3 branch left -->
+      <path d="M 266 272 Q 120 272 120 420 Q 120 460 246 460" stroke="#c41e3a" stroke-width="1.8" fill="none" stroke-dasharray="6,4" marker-end="url(#bred)"/>
+      <text x="74" y="368" font-size="9" fill="#c41e3a" text-anchor="middle" transform="rotate(-90 74 368)">rejected ≥ 3 times</text>
+      <path d="M 246 450 L 426 448 L 428 484 L 244 486 Z" fill="#fff0f0" stroke="#c41e3a" stroke-width="1.8" stroke-linejoin="round" filter="url(#r2)"/>
+      <text x="337" y="470" font-size="12" font-weight="bold" fill="#c41e3a" text-anchor="middle">simplifyTask</text>
+      <text x="337" y="482" font-size="9" fill="#666" text-anchor="middle" font-style="italic">split into smaller sub-tasks</text>
+      <path d="M 337 448 Q 337 220 408 214" stroke="#c41e3a" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#bred)"/>
+
+      <!-- approved → executor -->
+      <line x1="410" y1="295" x2="410" y2="330" stroke="#166534" stroke-width="1.8" marker-end="url(#bgrn)" stroke-dasharray="5,4"/>
+      <text x="430" y="318" font-size="9" fill="#166534">approved</text>
+
+      <!-- executorAgent -->
+      <path d="M 248 332 L 572 330 L 574 374 L 246 376 Z" fill="#f0fdf4" stroke="#166534" stroke-width="1.8" stroke-linejoin="round" filter="url(#r2)"/>
+      <text x="410" y="356" font-weight="bold" fill="#166534">executorAgent</text>
+      <text x="410" y="372" font-size="9" fill="#555" font-style="italic">runs code inside Docker: syntax, imports, integration tests</text>
+
+      <!-- fail branch right -->
+      <path d="M 574 352 Q 680 352 680 430" stroke="#c41e3a" stroke-width="1.8" fill="none" stroke-dasharray="6,4" marker-end="url(#bred)"/>
+      <text x="696" y="390" font-size="9" fill="#c41e3a" text-anchor="middle" transform="rotate(90 696 390)">FAIL</text>
+
+      <!-- debuggerAgent box -->
+      <path d="M 590 432 L 818 430 L 820 570 L 588 572 Z" fill="#fff5f5" stroke="#c41e3a" stroke-width="2" stroke-linejoin="round" filter="url(#r2)"/>
+      <text x="704" y="458" font-size="13" font-weight="bold" fill="#c41e3a" text-anchor="middle">debuggerAgent</text>
+      <g font-size="10.5" fill="#333" text-anchor="start">
+        <text x="604" y="482">Tier 1 · Fix using local error context</text>
+        <text x="604" y="500">Tier 2 · Fix with broader codebase context</text>
+        <text x="604" y="518">Tier 2.5 · Roll back to last snapshot</text>
+        <text x="604" y="536">Tier 3 · Escalate to human for guidance</text>
+      </g>
+      <text x="704" y="560" text-anchor="middle" font-size="9" fill="#c41e3a" font-family="'Comic Sans MS',cursive" font-style="italic">"Little Bugs Require Humans"</text>
+      <path d="M 590 470 Q 490 360 572 352" stroke="#c41e3a" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#bred)"/>
+      <text x="530" y="400" font-size="9" fill="#c41e3a" font-style="italic">retry → coder</text>
+
+      <!-- pass → snapshot -->
+      <line x1="410" y1="377" x2="410" y2="412" stroke="#166534" stroke-width="1.8" marker-end="url(#bgrn)" stroke-dasharray="5,4"/>
+      <text x="430" y="400" font-size="9" fill="#166534">PASS</text>
+
+      <!-- snapshotManager -->
+      <path d="M 268 414 L 552 412 L 554 452 L 266 454 Z" fill="#fafaf5" stroke="#444" stroke-width="1.8" stroke-linejoin="round" filter="url(#r2)"/>
+      <text x="410" y="437" font-weight="bold">snapshotManager</text>
+      <text x="410" y="451" font-size="9" fill="#666" font-style="italic">deepcopy(state) → save rollback point</text>
+
+      <!-- loop back left -->
+      <path d="M 266 433 Q 160 433 158 80 Q 158 36 266 30" stroke="#166534" stroke-width="1.8" fill="none" stroke-dasharray="6,4" marker-end="url(#bgrn)"/>
+      <text x="120" y="240" font-size="9" fill="#166534" text-anchor="middle" transform="rotate(-90 120 240)">next task — repeat × 21</text>
+    </g>
+  </svg>
+  </div>
+  <div class="sketch-cap">Fig 2. The self-healing dev loop — draw the main column first, add branches after</div>
+
+  <hr class="divider"/>
+
+  <h3>The Context Builder — say "this is like RAG"</h3>
+  <div class="with-margin">
+    <div class="margin-note blue">this impresses<br/>interviewers.<br/>use the term.</div>
+    <div>
+      <p>
+        Before the coder writes a file, <code>contextBuilder</code> fetches everything that file
+        will need: what imports are available, what functions other files export, what coding patterns
+        were established earlier. This is retrieval-augmented generation applied to code context.
+        The lookup itself is <strong>pure Python, zero LLM tokens</strong>:
+      </p>
+      <ol>
+        <li><strong>Exact match</strong> — Python dict lookup, O(1)</li>
+        <li><strong>Fuzzy match</strong> — partial string scan, O(n)</li>
+        <li><strong>Disk fallback</strong> — regex scan of file contents</li>
+      </ol>
+    </div>
+  </div>
+
+  <h3>Why one file per LLM call?</h3>
+  <p>
+    Large outputs get truncated mid-JSON. The Gemini API cuts off at the token limit, leaving
+    you with broken output. By generating one file at a time, outputs stay small and complete.
+    Yes, it means more API calls — but every call succeeds cleanly. The trade-off is deliberate.
+  </p>
+
+  <h3>The snapshot — it's a stack</h3>
+  <p>
+    After every successful file: <code>copy.deepcopy(state)</code> is pushed onto a list.
+    On rollback: <code>snapshots.pop()</code>. Classic stack. The deep copy matters — a shallow
+    copy would mean later changes corrupt the snapshot.
+  </p>
+</div>
+</div>
+
+<!-- ═══════════════════════════ TOKENS ═══════════════════════════ -->
+<div class="page" id="tokens">
+<div class="page-inner">
+  <h2>Token Economics — The Numbers They'll Ask About <span class="pg">§5</span></h2>
+
+  <div class="with-margin">
+    <div class="margin-note red">output tokens<br/>cost 4× more.<br/>say this.</div>
+    <div>
+      <p>
+        Gemini 2.5 Flash pricing: <mark>$0.15 per million input tokens</mark>,
+        <mark>$0.60 per million output tokens</mark>. Output is 4× more expensive.
+        This is why the reviewer agent (which reads full code files) dominates the bill —
+        it produces large outputs and has large inputs.
+      </p>
+    </div>
+  </div>
+
+  <!-- BAR CHART -->
+  <h3>Where the tokens go — todo app build</h3>
+
+  <div class="bar-item">
+    <span>Reviewer (25 reviews)</span>
+    <div class="bar-track"><div class="bar-fill" style="width:46%;background:#1e40af;"></div></div>
+    <span style="font-size:0.8rem;color:#666">46% · 250k</span>
+  </div>
+  <div class="bar-item">
+    <span>Coder (21 files)</span>
+    <div class="bar-track"><div class="bar-fill" style="width:31%;background:#166534;"></div></div>
+    <span style="font-size:0.8rem;color:#666">31% · 168k</span>
+  </div>
+  <div class="bar-item">
+    <span>Architect (5 steps)</span>
+    <div class="bar-track"><div class="bar-fill" style="width:7%;background:#92400e;"></div></div>
+    <span style="font-size:0.8rem;color:#666">7% · 40k</span>
+  </div>
+  <div class="bar-item">
+    <span>Pattern Extractor</span>
+    <div class="bar-track"><div class="bar-fill" style="width:6%;background:#9d174d;"></div></div>
+    <span style="font-size:0.8rem;color:#666">6% · 35k</span>
+  </div>
+  <div class="bar-item">
+    <span>Debugger + others</span>
+    <div class="bar-track"><div class="bar-fill" style="width:10%;background:#555;"></div></div>
+    <span style="font-size:0.8rem;color:#666">10% · 55k</span>
+  </div>
+
+  <div class="postit blue" style="max-width:none;margin-top:18px">
+    <strong>Key insight for interviews</strong>
+    Reviewer + Coder = 77% of all tokens. The Reviewer reads the entire code in every
+    review cycle, so it's the most expensive agent. "I could reduce cost further
+    by caching reviewed patterns, but correctness mattered more."
+  </div>
+
+  <table>
+    <tr><th>Agent</th><th>LLM calls</th><th>Input tokens</th><th>Output tokens</th><th>Cost (est.)</th></tr>
+    <tr><td>PM Agent</td><td>2</td><td>~8,000</td><td>~2,800</td><td>$0.003</td></tr>
+    <tr><td>Architect (5 steps)</td><td>5</td><td>~40,000</td><td>~15,000</td><td>$0.015</td></tr>
+    <tr><td>Planner</td><td>1</td><td>~12,000</td><td>~4,000</td><td>$0.004</td></tr>
+    <tr><td>Coder (21 files)</td><td>21</td><td>~168,000</td><td>~42,000</td><td>$0.051</td></tr>
+    <tr><td>Reviewer (25 reviews)</td><td>25</td><td>~250,000</td><td>~25,000</td><td>$0.052</td></tr>
+    <tr><td>Debugger (~4 failures)</td><td>4</td><td>~32,000</td><td>~8,000</td><td>$0.010</td></tr>
+    <tr><td>Pattern Extractor</td><td>7</td><td>~35,000</td><td>~10,500</td><td>$0.011</td></tr>
+    <tr><td>Deploy / Present</td><td>0</td><td>—</td><td>—</td><td>$0.000</td></tr>
+    <tr class="tfoot"><td>TOTAL</td><td>~65</td><td>~545,000</td><td>~107,000</td><td>~$0.146</td></tr>
+  </table>
+
+  <h3>How cost is enforced in code</h3>
+  <p>
+    Before every Gemini API call, the wrapper checks the running total against the budget.
+    If <code>current_cost &gt;= token_budget</code>, it raises <code>TOKEN_BUDGET_EXCEEDED</code>
+    immediately — before touching the API. Default budget is $2.00, configurable via environment
+    variable. One budget covers roughly <mark>10–12 todo-scale apps</mark>.
+  </p>
+</div>
+</div>
+
+<!-- ═══════════════════════════ Q&A ═══════════════════════════ -->
+<div class="page" id="qa">
+<div class="page-inner">
+  <h2>Interview Q &amp; A — Read This Like A Script <span class="pg">§6</span></h2>
+  <span class="aside-note">← practice these out loud. silent reading does not prepare you for speaking.</span>
+
+  <h3>Project-Specific</h3>
+
+  <div class="qa">
+    <div class="q">Why LangGraph instead of plain Python functions?</div>
+    <div class="a">With 27 nodes, plain functions become spaghetti — you lose track of who calls what and
+    state gets passed around inconsistently. LangGraph forces every node to communicate only through
+    a shared state object with defined reducers. It also handles conditional routing, loops, and
+    checkpointing natively. The structure scales cleanly as you add nodes.</div>
+  </div>
+
+  <div class="qa">
+    <div class="q">What are reducers? Give examples.</div>
+    <div class="a">Rules for merging incoming state with existing state.
+    Three types: <strong>last-write</strong> — new value replaces old (used for <code>currentTask</code>);
+    <strong>merge_objects</strong> — shallow dict merge <code>{**old, **new}</code> (used for <code>blueprint</code>);
+    <strong>accumulate</strong> — append to list (used for conversation history and file registry).
+    Each node is a pure function: state in, state out.</div>
+  </div>
+
+  <div class="qa">
+    <div class="q">Why checkpoint to Redis after every single node?</div>
+    <div class="a">A full run takes 30–60 minutes and makes 100+ API calls. Without checkpointing,
+    any crash means restarting from zero and paying for all those API calls again. With Redis,
+    LangGraph resumes exactly from the last completed node. I also built a fallback to in-memory
+    checkpointing if Redis is unavailable — so the system degrades gracefully.</div>
+  </div>
+
+  <div class="qa">
+    <div class="q">Why is the Blueprint Validator written in Python instead of asking the LLM?</div>
+    <div class="a">Validation needs guarantees, not probabilities. The validator checks five structural
+    invariants — every API route references a real table, all foreign keys are valid, no orphan tables,
+    consistent auth, consistent naming. A Python function checking these is 100% accurate, instant,
+    and costs zero tokens. An LLM might hallucinate "looks fine" when it's not.</div>
+  </div>
+
+  <div class="qa">
+    <div class="q">How does human-in-the-loop work without blocking the event loop?</div>
+    <div class="a">The InputBridge pattern: the agent emits a WebSocket event to the dashboard and then
+    awaits an <code>asyncio.Future()</code>. When the user submits their answer, the WebSocket
+    handler calls <code>future.set_result(answer)</code> which resolves the Future and the agent
+    resumes. The event loop is never blocked — other coroutines keep running while waiting for
+    human input.</div>
+  </div>
+
+  <div class="qa">
+    <div class="q">What happens when generated code fails? Walk me through it.</div>
+    <div class="a">Executor runs the code in Docker and it fails. Control goes to debuggerAgent,
+    which tries three escalation tiers: Tier 1, fix using just the local error context; Tier 2,
+    fix with broader codebase context; Tier 2.5, roll back to the last successful snapshot and retry;
+    Tier 3, emit a human-escalation request and wait. Meanwhile if the reviewer has rejected the
+    same task three or more times, simplifyTask breaks it into smaller sub-tasks. Both paths feed
+    back into the coder — the loop terminates either by passing the executor or by a human
+    saying skip.</div>
+  </div>
+
+  <h3>Python Concepts</h3>
+
+  <div class="qa">
+    <div class="q">Where did you use asyncio, and why not threads?</div>
+    <div class="a">The workload is I/O-bound — waiting on Gemini API, Redis, Docker commands — not CPU-bound.
+    asyncio handles hundreds of concurrent I/O waits on a single thread by switching at <code>await</code>
+    points. Threads would hit Python's GIL for CPU tasks and add synchronization overhead for no benefit
+    here. FastAPI, the Gemini calls, the Redis checkpointing, and the InputBridge all use async/await.</div>
+  </div>
+
+  <div class="qa">
+    <div class="q">Why <code>deepcopy</code> for snapshots rather than shallow copy?</div>
+    <div class="a">Shallow copy shares references to nested objects. If I shallow-copy the state and then
+    the active run modifies a nested dict, the snapshot is silently corrupted. <code>copy.deepcopy()</code>
+    produces a completely independent copy — modifying the live state later cannot affect it.
+    The merge_objects reducer uses shallow merge because it's creating a fresh dict from two separate
+    sources, which is fine. The snapshot must be a true independent clone.</div>
+  </div>
+
+  <div class="qa">
+    <div class="q">What OOP principles did you apply?</div>
+    <div class="a">Encapsulation — each agent class owns its prompt and parsing logic privately.
+    Inheritance — a BaseAgent holds the common Gemini call, retry logic, and token tracking;
+    specific agents extend it. Polymorphism — all agents implement <code>run(state)</code>,
+    so LangGraph calls them uniformly without caring which agent it is.
+    Abstraction — SandboxManager hides all Docker complexity behind <code>create()</code>,
+    <code>execute(cmd)</code>, and <code>cleanup()</code>.</div>
+  </div>
+
+  <h3>DSA</h3>
+
+  <div class="qa">
+    <div class="q">Name the data structures used and where.</div>
+    <div class="a">Queue (task queue — FIFO), Stack (snapshot history — push on success, pop on rollback),
+    HashMap/dict (file registry — O(1) filename lookup), DAG (LangGraph itself — 27 nodes plus
+    directed conditional edges), append-only list (event log, conversation history, token records).
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="q">Write code to detect a cycle in the task dependency graph.</div>
+    <div class="a">
+<pre>def has_cycle(graph: dict[str, list[str]]) -> bool:
+    WHITE, GRAY, BLACK = 0, 1, 2
+    color = {node: WHITE for node in graph}
+
+    def dfs(node) -> bool:
+        color[node] = GRAY
+        for neighbor in graph.get(node, []):
+            if color[neighbor] == GRAY:    # back edge = cycle
+                return True
+            if color[neighbor] == WHITE and dfs(neighbor):
+                return True
+        color[node] = BLACK
+        return False
+
+    return any(dfs(n) for n in graph if color[n] == WHITE)</pre>
+    DFS with 3-color marking. GRAY means "currently on the recursion stack." Finding a GRAY neighbor
+    means we found an edge back to an ancestor — that's a cycle. Time: O(V + E).
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════ NUMBERS ═══════════════════════════ -->
+<div class="page" id="numbers">
+<div class="page-inner">
+  <h2>Numbers — Know These Cold <span class="pg">§7</span></h2>
+  <span class="aside-note">← if you hesitate on any of these, go back and memorize them</span>
+
+  <div class="num-grid">
+    <div class="num-box important">
+      <span class="big" style="color:#c41e3a">27</span>
+      <span class="lbl">Total agents / nodes</span>
+      <span class="why">half a card deck (26) + a joker</span>
+    </div>
+    <div class="num-box">
+      <span class="big">7</span>
+      <span class="lbl">Pipeline phases</span>
+      <span class="why">"Please All Programmers Don't Quit During Production"</span>
+    </div>
+    <div class="num-box">
+      <span class="big">12 / 15</span>
+      <span class="lbl">LLM nodes / code-only nodes</span>
+      <span class="why">"12 thinkers, 15 clerks"</span>
+    </div>
+    <div class="num-box important">
+      <span class="big" style="color:#c41e3a">~65</span>
+      <span class="lbl">LLM calls per todo app</span>
+      <span class="why">retirement age 65</span>
+    </div>
+    <div class="num-box important">
+      <span class="big" style="color:#c41e3a">$0.13</span>
+      <span class="lbl">Cost of a todo app</span>
+      <span class="why">"unlucky 13" cents</span>
+    </div>
+    <div class="num-box">
+      <span class="big">21</span>
+      <span class="lbl">Tasks in a todo app</span>
+      <span class="why">blackjack</span>
+    </div>
+    <div class="num-box">
+      <span class="big">$2.00</span>
+      <span class="lbl">Default token budget</span>
+      <span class="why">≈ 10 todo apps per budget</span>
+    </div>
+    <div class="num-box">
+      <span class="big">2¹⁶</span>
+      <span class="lbl">Max output tokens (65,536)</span>
+      <span class="why">say "two to the sixteen" — it sounds good</span>
+    </div>
+    <div class="num-box important">
+      <span class="big" style="color:#c41e3a">3</span>
+      <span class="lbl">Debugger tiers (+rollback)</span>
+      <span class="why">"Little Bugs Require Humans"</span>
+    </div>
+    <div class="num-box">
+      <span class="big">4×</span>
+      <span class="lbl">Output vs input token cost</span>
+      <span class="why">$0.60 vs $0.15 per 1M</span>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <h3>Design decisions — know the WHY, not just the WHAT</h3>
+  <table>
+    <tr><th>Decision</th><th>Why</th><th>The trade-off I'd acknowledge</th></tr>
+    <tr>
+      <td>LangGraph over plain functions</td>
+      <td>27 nodes need shared state, routing, and checkpointing</td>
+      <td>Learning curve; smaller projects don't need it</td>
+    </tr>
+    <tr>
+      <td>Checkpoint after every node</td>
+      <td>30–60 min runs must survive crashes</td>
+      <td>Redis write overhead on every node</td>
+    </tr>
+    <tr>
+      <td>Docker for code execution</td>
+      <td>Generated code is untrusted — OS-level isolation</td>
+      <td>Container startup latency (~2–3s per container)</td>
+    </tr>
+    <tr>
+      <td>One file per LLM call</td>
+      <td>Prevents JSON truncation on large outputs</td>
+      <td>More API calls overall</td>
+    </tr>
+    <tr>
+      <td>Validator in pure Python</td>
+      <td>Deterministic — LLMs can hallucinate "valid"</td>
+      <td>Only catches structural issues, not semantic ones</td>
+    </tr>
+    <tr>
+      <td>WebSocket over polling</td>
+      <td>Push-based, no wasted HTTP round-trips</td>
+      <td>Requires persistent connection management</td>
+    </tr>
+  </table>
+</div>
+</div>
+
+<!-- ═══════════════════════════ PITCH ═══════════════════════════ -->
+<div class="page" id="pitch">
+<div class="page-inner">
+  <h2>The 60-Second Pitch — Practice This Out Loud <span class="pg">§8</span></h2>
+
+  <div class="callout" data-label="Speak this. Do not read it.">
+    <p>
+      "I built a Python-based autonomous AI development system with <mark>27 specialized agents</mark>
+      orchestrated by LangGraph. You type a requirement and the system handles everything —
+      a PM agent clarifies the spec, an Architect designs the database and APIs in five steps,
+      a Planner creates <mark>21 tasks</mark> and spins up Docker containers, then a self-healing
+      Dev Loop writes every file with <span class="hl-blue">Gemini 2.5 Flash</span>, a Reviewer approves it,
+      tests it in Docker, and on failure a three-tier Debugger escalates from auto-fix to rollback
+      to asking the human. Redis checkpoints state after every node for crash recovery.
+      Total cost for a todo app: <mark>about 13 cents</mark>."
+    </p>
+  </div>
+
+  <h3>Follow-up answers — keep these short and confident</h3>
+
+  <div class="with-margin">
+    <div class="margin-note red">hardest question.<br/>be specific.</div>
+    <div class="qa" style="margin:0">
+      <div class="q">What was the hardest bug?</div>
+      <div class="a">LLM JSON truncation. Gemini would cut off mid-JSON when the output hit the
+      token limit. I built a five-tier repair pipeline: detect a <code>MAX_TOKENS</code> finish reason,
+      try to close unclosed JSON brackets, extract partial JSON, retry with a smaller prompt, or
+      fall back to requesting just the critical parts. Then I prevented it permanently by switching
+      to one-file-per-call — outputs stay small enough to never truncate.</div>
+    </div>
+  </div>
+
+  <div class="qa" style="margin-top:14px">
+    <div class="q">What would you improve if you had more time?</div>
+    <div class="a">Three things: replace the file-registry-based context with a vector database for
+    semantic retrieval — proper RAG instead of string matching. Add parallel task execution within
+    a phase, since tasks in the same phase are often independent. And add a provider abstraction so
+    the system can fall back to Claude or GPT-4 if Gemini is rate-limited.</div>
+  </div>
+
+  <div class="qa">
+    <div class="q">How does this scale to larger applications?</div>
+    <div class="a">State-driven architecture helps — no direct node-to-node calls means adding nodes
+    doesn't break existing ones. The token budget would need raising for larger apps. Parallel
+    execution within phases would cut wall-clock time significantly. The Docker sandboxes are already
+    isolated per project, so horizontal scaling is mostly a matter of running multiple graph instances.</div>
+  </div>
+
+  <hr class="divider"/>
+
+  <div class="postit green" style="max-width:none;transform:none">
+    <strong>Last thing — the three mnemonics. Repeat them now.</strong>
+    1. <strong>"Please All Programmers Don't Quit During Production"</strong> — 7 phases<br/>
+    2. <strong>"Some Coders Can Really Execute Snapshots"</strong> — dev loop steps<br/>
+    3. <strong>"Little Bugs Require Humans"</strong> — debugger tier escalation<br/>
+    4. <strong>Brain · Glass Room · Photographer</strong> — Gemini · Docker · Redis<br/><br/>
+    If you can draw the architecture diagram while saying the 60-second pitch, you are ready.
+  </div>
+</div>
+</div>
+
+<div style="text-align:center;padding:28px;color:#8a7a68;font-size:0.8rem;font-family:Georgia,serif;">
+  All the best. You know this project inside out.
+</div>
+</body>
+</html>
